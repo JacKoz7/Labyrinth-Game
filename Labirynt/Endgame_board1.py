@@ -111,4 +111,4 @@ def player1_endgame(a3, b3, c3, screen):  # parametry a b c to wspolrzedne skarb
 
 
 def Costam():
-    return 3
+    return 5
