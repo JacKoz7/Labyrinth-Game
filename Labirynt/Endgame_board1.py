@@ -109,3 +109,6 @@ def player1_endgame(a3, b3, c3, screen):  # parametry a b c to wspolrzedne skarb
 
         pygame.display.update()
 
+
+def Costam():
+    return 1
