@@ -45,7 +45,7 @@ class Labirynt:
             pygame.display.update()
 
     def main_menu(self):
-        import play_func
+        import Main
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
             self.SCREEN.fill('Black')
