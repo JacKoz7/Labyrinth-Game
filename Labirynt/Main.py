@@ -239,7 +239,7 @@ def play1(screen, txt):
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
-                game = Labirynt()  # utworzenie obiektu game z pliku Main
+                game = Labirynt()
                 game.main_menu()
 
         pygame.display.update()
