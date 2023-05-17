@@ -245,8 +245,7 @@ def play1(screen, txt):
         pygame.display.update()
 
 
-def funckja():
-    pass
+
 
 
 
