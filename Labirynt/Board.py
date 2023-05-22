@@ -25,6 +25,9 @@ class GameState():
             return self.selected_point
         else:
             return None
-    def draw_small_board(self, SCREEN):
+
+    def draw_small_board(self, SCREEN, counter, tick_image):
         for x in range(5):
             pygame.draw.rect(SCREEN, 'Red', (900 + x * square_size, 330 + square_size, square_size, square_size), 7)
+            if x < counter:
+                SCREEN.blit(tick_image, (900 + x * square_size, 330 + square_size))
