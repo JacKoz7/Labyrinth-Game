@@ -29,10 +29,12 @@ def player1_endgame(a3, b3, c3,
 
     #Dane do zapisania
     cross_drawn = True
+
     wrong_squares = []
     znaleziony_labiryt = []
+
     counter = 0  # licznik poprawnych zgadnięć
-    treasure_position = None
+    treasure_position = False
 
     """
     player1_state = PlayerState()
@@ -82,8 +84,8 @@ def player1_endgame(a3, b3, c3,
             screen.blit(image_wall, (102 + loc2 * 60, 52 + loc1 * 60))
 
         # Draw the treasure after the walls
-        if treasure_position is not None:
-            loc1, loc2 = treasure_position
+        if treasure_position:
+            loc1, loc2 = a3[0]
             screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
         for square in znaleziony_labiryt:
@@ -105,28 +107,39 @@ def player1_endgame(a3, b3, c3,
                     selected_square = (row, col)
                     print(selected_square)
 
-                    # Add a wall if the selected square is not part of the maze but is a neighbour of the start
-                    if selected_square not in b3 and any(
-                            neighbour == c3[0] for neighbour in get_neighbours(selected_square)):
-                        wrong_squares.append(selected_square)
+                    # Czy wybrana kratka jest skarbem i czy jest sąsiadująca z jakąkolwiek kratką labiryntu
+                    if selected_square == a3[0] and any(
+                            neighbour in znaleziony_labiryt for neighbour in get_neighbours(selected_square)):
+                        treasure_position = True  # Zmieniamy flagę wskazującą na znalezienie skarbu
+                        continue  # Przechodzimy do następnego zdarzenia
 
-                    if selected_square in b3:
-                        # sprawdzanie, czy wybrana kratka jest sąsiadująca z którąkolwiek z już wybranych
+                    # Czy wybrana kratka jest sąsiadująca z ostatnią wybraną kratką labiryntu,
+                    # nie jest ścianą i nie jest krzyżykiem
+                    if znaleziony_labiryt and selected_square not in b3 and selected_square != c3[0] and any(
+                            neighbour == znaleziony_labiryt[-1] for neighbour in get_neighbours(selected_square)):
+                        wrong_squares.append(selected_square) # Dodajemy kratkę do listy niewłaściwych ruchów
+
+                    elif selected_square in b3:  # Czy wybrana kratka jest w liście poprawnych kwadratów
+                        # Czy wybrana kratka jest sąsiadująca z którąkolwiek z już wybranych
                         if not znaleziony_labiryt or any(
                                 neighbour in znaleziony_labiryt for neighbour in get_neighbours(selected_square)):
-                            znaleziony_labiryt.append(selected_square)
-                            counter += 1
-                            # skracanie ścieżki
+                            if selected_square not in znaleziony_labiryt:  # Czy kratka nie jest już częścią labiryntu
+                                znaleziony_labiryt.append(selected_square) # Dodajemy kratkę do labiryntu
+                                counter += 1 # Dodajemy kratkę do labiryntu
+
+                            # skracanie ścieżki, jeżeli ostatnia wybrana kratka nie jest sąsiadująca z żadną ścianą
                             while znaleziony_labiryt and not any(
                                     neighbour in b3 for neighbour in get_neighbours(znaleziony_labiryt[-1])):
                                 znaleziony_labiryt.pop()
-                            if counter == 5:
-                                #Tutaj gamestate
-                                break
+
                     else:
-                        # sprawdzanie, czy wybrana kratka jest sąsiadująca z którąkolwiek z kratek labiryntu
-                        if selected_square != a3[0] and any(neighbour in znaleziony_labiryt for neighbour
-                                                            in get_neighbours(selected_square)):
+                        # Czy wybrana kratka jest sąsiadująca z którąkolwiek z kratek labiryntu i nie jest krzyżykiem
+                        if selected_square != c3[0] and any(neighbour in znaleziony_labiryt for neighbour in
+                                                            get_neighbours(selected_square)):
+                            wrong_squares.append(selected_square)
+
+                        # Pozwolenie na umieszczenie ściany obok krzyżyka
+                        elif c3[0] in get_neighbours(selected_square) and selected_square not in b3:
                             wrong_squares.append(selected_square)
 
                             """
@@ -141,10 +154,6 @@ def player1_endgame(a3, b3, c3,
                             game_switch = True  # Ustawienie flagi na true, aby gracz 1 mógł kontynuować grę
                             break
                             """
-
-                    # Check if the selected square is the treasure
-                    if selected_square == a3[0]:
-                        treasure_position = selected_square
 
             if event.type == pygame.QUIT:
                 pygame.quit()
