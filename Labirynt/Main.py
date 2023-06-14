@@ -2,8 +2,6 @@ import pygame
 from General import Labirynt
 from Board import GameState
 from Button import button1
-from cords import Player
-from play2_func import play2
 
 txt = 'Gracz 1'
 txt2 = 'Gracz 2'
