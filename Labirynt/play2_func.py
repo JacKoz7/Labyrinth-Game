@@ -5,9 +5,11 @@ from General import Labirynt
 from cords import Player
 from Endgame_board1 import player1_endgame
 
+
 def get_font(size):
     return pygame.font.Font('Ancient Medium.ttf', size)
 def play2(screen, txt):
+
     game = Labirynt()     #utworzenie obiektu game z pliku Main
     skarb_drawn = False
     krzyzyk_drawn = False
@@ -32,6 +34,7 @@ def play2(screen, txt):
 
     gracz1_skarb = []
     labirynt_temp = []
+    cross_cords2 = []
 
     while True:
         play_mouse_pos = pygame.mouse.get_pos()
@@ -216,7 +219,7 @@ def play2(screen, txt):
                         krzyzyk_drawn = True
                         show_step3 = False
                         show_step4 = False
-                        cross_cords2 = []
+
                         cross_cords2.append(selected_squares[-1])
                         points2 = Player(gracz1_skarb, selected_squares[:-1], cross_cords2)
                         points2.print()     #wywołanie metody obiektu zwracającego współrzędne wszystkich punktów
