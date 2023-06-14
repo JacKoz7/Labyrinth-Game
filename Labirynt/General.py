@@ -45,7 +45,13 @@ class Labirynt:
             pygame.display.update()
 
     def main_menu(self):
-        import Main
+        from play2_func import First_Stage
+
+        Player1_beginning = First_Stage()
+        Player2_beginning = First_Stage()
+
+        counter = 0
+
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
             self.SCREEN.fill('Black')
@@ -75,7 +81,9 @@ class Labirynt:
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.CheckForInput(menu_mouse_pos):
-                        Main.play1(self.SCREEN, self.txt)
+                            Player1_beginning.play1(self.SCREEN, self.txt)
+                            Player2_beginning.play1(self.SCREEN, self.txt2)
+
                     if options_button.CheckForInput(menu_mouse_pos):
                         self.options()
                     if quit_button.CheckForInput(menu_mouse_pos):
