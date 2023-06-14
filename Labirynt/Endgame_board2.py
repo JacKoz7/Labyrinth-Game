@@ -11,7 +11,7 @@ def get_neighbours(position):
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     neighbours = [(row + dr, col + dc) for dr, dc in directions]
     return neighbours
-
+#
 def player2_endgame(a3, b3, c3, e4, screen):  # parametry a b c to wspolrzedne skarbu labiryntu i krzyzyka z planszy gracza 1
     print('wspolrzedne drugiego gracza')
 

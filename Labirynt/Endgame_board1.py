@@ -88,7 +88,7 @@ def player1_endgame(a3, b3, c3,
                     col = location[1]
                     selected_square = (row, col)
                     print(selected_square)
-
+#
                     # Czy wybrana kratka jest skarbem i czy jest sąsiadująca z jakąkolwiek kratką labiryntu
                     if selected_square == a3[0] and any(
                             neighbour in znaleziony_labiryt for neighbour in get_neighbours(selected_square)):

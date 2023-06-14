@@ -71,7 +71,7 @@ class First_Stage:
                                   new_color='White')
             button_back.ChangeColor(play_mouse_pos)
             button_back.update(screen)
-
+#
             if show_step1:
                 screen.blit(step1_text, step1_rect)
             if show_step2:

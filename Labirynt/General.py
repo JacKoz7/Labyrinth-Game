@@ -45,12 +45,10 @@ class Labirynt:
             pygame.display.update()
 
     def main_menu(self):
-        from play2_func import First_Stage
+        from First_move import First_Stage
 
         Player1_beginning = First_Stage()
         Player2_beginning = First_Stage()
-
-        counter = 0
 
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
