@@ -79,8 +79,9 @@ class Labirynt:
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.CheckForInput(menu_mouse_pos):
-                            Player1_beginning.play1(self.SCREEN, self.txt, 'Gracz 2 :)')
-                            Player2_beginning.play1(self.SCREEN, self.txt2, 'Kontynuuj ')
+                            Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
+                            Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
+
 
                     if options_button.CheckForInput(menu_mouse_pos):
                         self.options()

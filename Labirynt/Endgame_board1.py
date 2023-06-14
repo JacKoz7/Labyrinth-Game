@@ -2,7 +2,6 @@ import pygame
 from General import Labirynt
 from Button import button1
 from Board import GameState
-from Endgame_board2 import player2_endgame
 
 def get_font(size):
     return pygame.font.Font('Ancient Medium.ttf', size)
@@ -13,8 +12,7 @@ def get_neighbours(position):
     neighbours = [(row + dr, col + dc) for dr, dc in directions]
     return neighbours
 
-def player1_endgame(a3, b3, c3,
-                    screen):  # parametry a b c to wspolrzedne skarbu labiryntu i krzyzyka z planszy gracza 2
+def player1_endgame(screen):  # parametry a b c to wspolrzedne skarbu labiryntu i krzyzyka z planszy gracza 2
     print('wspolrzedne drugiego gracza')
 
 
@@ -35,6 +33,7 @@ def player1_endgame(a3, b3, c3,
 
     game = Labirynt()
     BOARD = GameState()
+
     image_treasure = pygame.image.load('red_circle1.png')
     image_krzyzyk = pygame.image.load('red_krzyzyk1.png')
     image_point = pygame.image.load('red_point1.png')

@@ -9,13 +9,11 @@ class First_Stage:
         self.labyrinth = []
         self.cross = []
 
-        self.counter = 0
-
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
 
 
-    def play1(self, screen, txt, ButtonText):
+    def play(self, screen, txt, ButtonText):
 
         treasure_drawn = False
         labyrinth_drawn = False
@@ -239,9 +237,6 @@ class First_Stage:
 
                             show_next_move = True
                             print('rozpoczela sie nowa gra')
-                            print(selected_treasure)
-                            print(self.labyrinth)
-                            print(selected_cross)
 
                             # play2(screen, txt2)
                         else:
