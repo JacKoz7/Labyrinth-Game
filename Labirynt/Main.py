@@ -7,32 +7,29 @@ from play2_func import play2
 
 txt = 'Gracz 1'
 txt2 = 'Gracz 2'
-a = None
-b = None
-c = None
-
 
 def get_font(size):
     return pygame.font.Font('Ancient Medium.ttf', size)
 
 def play1(screen, txt):
 
-    global a, b, c
-    gracz1_skarb = []
-    selected_squares = []
-    cross_cords = []
+    treasure = []
+    labyrinth = []
+    cross = []
 
-    skarb_drawn = False
-    krzyzyk_drawn = False
-    labirynt_drawn = False
+    treasure_drawn = False
+    labyrinth_drawn = False
+    cross_drawn = False
 
     show_step1 = True
     show_step2 = False
     show_step3 = False
     show_step4 = False
 
-    selected_square = None
-    selected_squareX = None
+    show_next_move = False
+
+    selected_treasure = None
+    selected_cross = None
 
     must_restart = False
 
@@ -42,7 +39,6 @@ def play1(screen, txt):
     image_labyrinth = pygame.image.load('red_point1.png')
     image_cross = pygame.image.load('red_krzyzyk1.png')
 
-    labirynt_temp = []
 
     while True:
         play_mouse_pos = pygame.mouse.get_pos()
@@ -66,6 +62,14 @@ def play1(screen, txt):
         step4_text = get_font(60).render(txt + ', spróbuj ponownie!', True, 'Red')
         step4_rect = step1_text.get_rect(center=(900, 230))
 
+        #Powrót
+        img = pygame.image.load('empty_button.png')
+
+        button_back = button1(image=img, pos=(1050, 600), text_input='Powrót', font=get_font(65), base_color='Black',
+                              new_color='White')
+        button_back.ChangeColor(play_mouse_pos)
+        button_back.update(screen)
+
         if show_step1:
             screen.blit(step1_text, step1_rect)
         if show_step2:
@@ -75,149 +79,148 @@ def play1(screen, txt):
         if show_step4:
             screen.blit(step4_text, step4_rect)
 
-        if skarb_drawn:
-            row, col = selected_square
+        if show_next_move:
+            img = pygame.image.load('empty_button.png')
+
+            button_back = button1(image=img, pos=(1050, 500), text_input='Gracz 2 :)', font=get_font(65),
+                                  base_color='Black',
+                                  new_color='White')
+            button_back.ChangeColor(play_mouse_pos)
+            button_back.update(screen)
+
+        if treasure_drawn:
+            row, col = selected_treasure
             screen.blit(image_treasure, (102 + col * 60, 52 + row * 60))
 
-        if labirynt_drawn:
-            for square in selected_squares:
-                if square != selected_squareX:
+        if labyrinth_drawn:
+            for square in labyrinth:
+                if square != selected_cross and square != selected_treasure:
                     row, col = square
                     screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
 
-        if krzyzyk_drawn:
-            row, col = selected_squareX
+        if cross_drawn:
+            row, col = selected_cross
             screen.blit(image_cross, (102 + col * 60, 52 + row * 60))
 
-
-        img = pygame.image.load('empty_button.png')
-
-        button_back = button1(image=img, pos=(1050, 600), text_input='Powrót', font=get_font(65), base_color='Black',
-                              new_color='White')
-        button_back.ChangeColor(play_mouse_pos)
-        button_back.update(screen)
 
         for event in pygame.event.get():
 
             # ustawienie wartosci do domyślnej wartości
             if must_restart:
-                skarb_drawn = False
-                krzyzyk_drawn = False
-                labirynt_drawn = False
+                treasure = []
+                labyrinth = []
+
+                treasure_drawn = False
+                labyrinth_drawn = False
 
                 show_step1 = True
                 show_step3 = False
                 show_step2 = False
                 show_step4 = True
 
-                selected_square = None
-                selected_squares = []
-                selected_squareX = None
+                selected_treasure = None
 
-                gracz1_skarb = []
-                labirynt_temp = []
                 must_restart = False
 
             # Szkicowanie Skarbu
-            if event.type == pygame.MOUSEBUTTONDOWN and not skarb_drawn:
+            if event.type == pygame.MOUSEBUTTONDOWN and not treasure_drawn:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
                     row = location[0]
                     col = location[1]
 
-                    selected_square = (row, col)
-                    skarb_drawn = True
+                    selected_treasure = (row, col)
+                    treasure_drawn = True
                     show_step1 = False
                     show_step2 = True
 
-                    gracz1_skarb.append(selected_square)
-                    labirynt_temp.append(selected_square)  # Dodanie skarbu dla pozniejszegio warunku!
+                    labyrinth.append(selected_treasure)  # Dodanie skarbu dla pozniejszegio warunku!
 
             # Szkicowanie labiryntu
-            if event.type == pygame.MOUSEBUTTONDOWN and skarb_drawn and len(selected_squares) < 35:
+            if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(labyrinth) < 35:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
                     row = location[0]
                     col = location[1]
 
+                    selected_labyrinth = (row, col)
+
                     # Mozliwosc ustawienia kwadratow
-                    if len(selected_squares) == 0:
+                    if len(labyrinth) == 0:
                         # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z kwadratem skarbu
-                        if (row, col) == (gracz1_skarb[0][0] - 1, gracz1_skarb[0][1]) or \
-                                (row, col) == (gracz1_skarb[0][0] + 1, gracz1_skarb[0][1]) or \
-                                (row, col) == (gracz1_skarb[0][0], gracz1_skarb[0][1] - 1) or \
-                                (row, col) == (gracz1_skarb[0][0], gracz1_skarb[0][1] + 1):
-                            selected_squares.append((row, col))
-                            labirynt_temp.append((row, col))
+                        if selected_labyrinth == (treasure[0][0] - 1, treasure[0][1]) or \
+                                selected_labyrinth == (treasure[0][0] + 1, treasure[0][1]) or \
+                                selected_labyrinth == (treasure[0][0], treasure[0][1] - 1) or \
+                                selected_labyrinth == (treasure[0][0], treasure[0][1] + 1):
+                            labyrinth.append(selected_labyrinth)
 
                             # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z poprzednim kwadratem na liście
-                            #last_square = selected_squares[-1] zamiast petli
+                            #last_square = labyrinth[-1] zamiast petli
                     else:
                         # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
-                        for last_square in selected_squares:
-                            if (row, col) == (last_square[0] - 1, last_square[1]) or \
-                                    (row, col) == (last_square[0] + 1, last_square[1]) or \
-                                    (row, col) == (last_square[0], last_square[1] - 1) or \
-                                    (row, col) == (last_square[0], last_square[1] + 1):
-                                if (row, col) not in selected_squares and (row, col) != gracz1_skarb[0]:
-                                    selected_squares.append((row, col))
-                                    labirynt_temp.append((row, col))
+                        for last_square in labyrinth:
+                            if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
+                                    selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
+                                    selected_labyrinth == (last_square[0], last_square[1] - 1) or \
+                                    selected_labyrinth == (last_square[0], last_square[1] + 1):
+                                if selected_labyrinth not in labyrinth and selected_labyrinth != labyrinth[0]:
+                                    labyrinth.append(selected_labyrinth)
                                     break # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
 
-                    labirynt_drawn = True
+                    labyrinth_drawn = True
 
                     # Logika sprawdzania czy jest labirynt zamkniety
 
                     # sprawdź, czy dany kwadrat zablokował drogę do celu
                     # Rownierz, sprawdzenie czy skarb nie zablokował drogę do celu (wczesniej labirynt temp)
                     blocked = False
-                    if len(selected_squares) > 1:
-                        last_square = selected_squares[-1]
-                        if (last_square[0] + 1, last_square[1]) in labirynt_temp and \
-                                (last_square[0] - 1, last_square[1]) in labirynt_temp and \
-                                (last_square[0], last_square[1] + 1) in labirynt_temp and \
-                                (last_square[0], last_square[1] - 1) in labirynt_temp:
+                    if len(labyrinth) > 1:
+                        last_square = labyrinth[-1]
+                        if (last_square[0] + 1, last_square[1]) in labyrinth and \
+                                (last_square[0] - 1, last_square[1]) in labyrinth and \
+                                (last_square[0], last_square[1] + 1) in labyrinth and \
+                                (last_square[0], last_square[1] - 1) in labyrinth:
                             blocked = True
 
                     # Czy jest zablokowany na brzegu
-                    if row == 0 and (row + 1, col) in labirynt_temp and \
-                            (row, col + 1) in labirynt_temp and (row, col - 1) in labirynt_temp:
+                    if row == 0 and (row + 1, col) in labyrinth and \
+                            (row, col + 1) in labyrinth and (row, col - 1) in labyrinth:
                         blocked = True
-                    elif row == 9 and (row - 1, col) in labirynt_temp and \
-                            (row, col + 1) in labirynt_temp and (row, col - 1) in labirynt_temp:
+                    elif row == 9 and (row - 1, col) in labyrinth and \
+                            (row, col + 1) in labyrinth and (row, col - 1) in labyrinth:
                         blocked = True
-                    elif col == 0 and (row + 1, col) in labirynt_temp and \
-                            (row - 1, col) in labirynt_temp and (row, col + 1) in labirynt_temp:
+                    elif col == 0 and (row + 1, col) in labyrinth and \
+                            (row - 1, col) in labyrinth and (row, col + 1) in labyrinth:
                         blocked = True
-                    elif col == 9 and (row + 1, col) in labirynt_temp and \
-                            (row - 1, col) in labirynt_temp and (row, col - 1) in labirynt_temp:
+                    elif col == 9 and (row + 1, col) in labyrinth and \
+                            (row - 1, col) in labyrinth and (row, col - 1) in labyrinth:
                         blocked = True
 
                     # Czy jest zablokowany w rogu
-                    if row == 0 and col == 0 and (row + 1, col) in labirynt_temp and \
-                            (row, col + 1) in labirynt_temp:
+                    if row == 0 and col == 0 and (row + 1, col) in labyrinth and \
+                            (row, col + 1) in labyrinth:
                         blocked = True
-                    elif row == 0 and col == 9 and (row + 1, col) in labirynt_temp and \
-                            (row, col - 1) in labirynt_temp:
+                    elif row == 0 and col == 9 and (row + 1, col) in labyrinth and \
+                            (row, col - 1) in labyrinth:
                         blocked = True
-                    elif row == 9 and col == 0 and (row - 1, col) in labirynt_temp and \
-                            (row, col + 1) in labirynt_temp:
+                    elif row == 9 and col == 0 and (row - 1, col) in labyrinth and \
+                            (row, col + 1) in labyrinth:
                         blocked = True
-                    elif row == 9 and col == 9 and (row - 1, col) in labirynt_temp and \
-                            (row, col - 1) in labirynt_temp:
+                    elif row == 9 and col == 9 and (row - 1, col) in labyrinth and \
+                            (row, col - 1) in labyrinth:
                         blocked = True
 
                     if blocked:
                         print("The path is blocked. Please start over.")
                         must_restart = True
 
-                    if len(selected_squares) == 34:
+                    if len(labyrinth) == 34:
                         show_step2 = False
                         show_step3 = True
 
             # Szkicowanie krzyzyka
-            if event.type == pygame.MOUSEBUTTONDOWN and skarb_drawn and len(
-                    selected_squares) == 35 and not krzyzyk_drawn:
+            if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(
+                    labyrinth) == 35 and not cross_drawn:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
                     row = location[0]
@@ -225,19 +228,21 @@ def play1(screen, txt):
 
                     # sprawdź, czy wybrany kwadrat jest na brzegu
                     if (row == 0 or row == 9 or col == 0 or col == 9):
-                        selected_squareX = (row, col)
-                        krzyzyk_drawn = True
+                        selected_cross = (row, col)
+                        cross_drawn = True
                         show_step3 = False
                         show_step4 = False
-                        cross_cords.append(selected_squares[-1])
-                        points = Player(gracz1_skarb, selected_squares[:-1], cross_cords)
-                        points.print()              #wywołanie metody obiektu zwracającego współrzędne wszystkich punktów
+
+                        treasure.append((labyrinth[0])) #Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
+                        cross.append(labyrinth[-1])
+
+                        show_next_move = True
+
                         print('rozpoczela sie nowa gra')
-                        a, b, c = points.return_treasure(), points.return_way35(), points.return_cross()
-                        play2(screen, txt2)
+
+                        #play2(screen, txt2)
                     else:
-                        selected_squareX = (row, col)
-                        krzyzyk_drawn = True
+                        cross_drawn = False
                         must_restart = True
 
             if event.type == pygame.QUIT:

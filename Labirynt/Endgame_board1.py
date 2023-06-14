@@ -2,7 +2,7 @@ import pygame
 from General import Labirynt
 from Button import button1
 from Board import GameState
-from PlayerState import PlayerState
+from Endgame_board2 import player2_endgame
 
 def get_font(size):
     return pygame.font.Font('Ancient Medium.ttf', size)
@@ -17,10 +17,6 @@ def player1_endgame(a3, b3, c3,
                     screen):  # parametry a b c to wspolrzedne skarbu labiryntu i krzyzyka z planszy gracza 2
     print('wspolrzedne drugiego gracza')
 
-    """
-    from Endgame_board2 import player2_endgame
-    from play2_func import x, y, z
-    """
 
     print(a3)
     print(b3)
@@ -36,10 +32,6 @@ def player1_endgame(a3, b3, c3,
     counter = 0  # licznik poprawnych zgadnięć
     treasure_position = False
 
-    """
-    player1_state = PlayerState()
-    game_switch = False
-    """
 
     game = Labirynt()
     BOARD = GameState()
@@ -50,16 +42,6 @@ def player1_endgame(a3, b3, c3,
     tick_image = pygame.image.load('green_tick.png')
 
     while True:
-
-        """
-        if game_switch:  # Jeśli gra powinna przejść do gracza 1
-            cross_drawn = True
-            wrong_squares = player1_state.wrong_squares
-            znaleziony_labiryt = player1_state.znaleziony_labiryt
-            counter = player1_state.counter
-            treasure_position = player1_state.treasure_position
-            game_switch = False  # Reset flagi
-        """
 
         play_mouse_pos = pygame.mouse.get_pos()
         location = BOARD.draw_board(screen)
@@ -119,6 +101,11 @@ def player1_endgame(a3, b3, c3,
                             neighbour == znaleziony_labiryt[-1] for neighbour in get_neighbours(selected_square)):
                         wrong_squares.append(selected_square) # Dodajemy kratkę do listy niewłaściwych ruchów
 
+                        endgame_gracza1 = Endgame(a3,b3,c3,wrong_squares)
+                        x, y, z, w = endgame_gracza1.return_treasure(), endgame_gracza1.return_way35(),
+                        endgame_gracza1.return_cross(), endgame_gracza1.return_walls()
+                        player2_endgame(x, y, z, w, screen)
+
                     elif selected_square in b3:  # Czy wybrana kratka jest w liście poprawnych kwadratów
                         # Czy wybrana kratka jest sąsiadująca z którąkolwiek z już wybranych
                         if not znaleziony_labiryt or any(
@@ -141,19 +128,6 @@ def player1_endgame(a3, b3, c3,
                         # Pozwolenie na umieszczenie ściany obok krzyżyka
                         elif c3[0] in get_neighbours(selected_square) and selected_square not in b3:
                             wrong_squares.append(selected_square)
-
-                            """
-                            # Zapisanie stanu gry gracza 1
-                            cross_drawn = False
-                            player1_state.wrong_squares = wrong_squares
-                            player1_state.znaleziony_labiryt = znaleziony_labiryt
-                            player1_state.counter = counter
-                            player1_state.treasure_position = treasure_position
-
-                            player2_endgame(x, y, z, screen)
-                            game_switch = True  # Ustawienie flagi na true, aby gracz 1 mógł kontynuować grę
-                            break
-                            """
 
             if event.type == pygame.QUIT:
                 pygame.quit()

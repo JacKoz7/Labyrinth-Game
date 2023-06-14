@@ -5,14 +5,10 @@ from General import Labirynt
 from cords import Player
 from Endgame_board1 import player1_endgame
 
-x = None
-y = None
-z = None
 
 def get_font(size):
     return pygame.font.Font('Ancient Medium.ttf', size)
 def play2(screen, txt):
-    global x, y, z
 
     game = Labirynt()     #utworzenie obiektu game z pliku Main
     skarb_drawn = False

@@ -2,7 +2,6 @@ import pygame
 from General import Labirynt
 from Button import button1
 from Board import GameState
-from PlayerState import PlayerState
 
 def get_font(size):
     return pygame.font.Font('Ancient Medium.ttf', size)
@@ -13,14 +12,8 @@ def get_neighbours(position):
     neighbours = [(row + dr, col + dc) for dr, dc in directions]
     return neighbours
 
-def player2_endgame(a3, b3, c3,
-                    screen):  # parametry a b c to wspolrzedne skarbu labiryntu i krzyzyka z planszy gracza 2
+def player2_endgame(a3, b3, c3, e4, screen):  # parametry a b c to wspolrzedne skarbu labiryntu i krzyzyka z planszy gracza 1
     print('wspolrzedne drugiego gracza')
-
-    """
-    from Endgame_board1 import player1_endgame
-    from Main import a, b, c
-    """
 
     print(a3)
     print(b3)
@@ -36,11 +29,6 @@ def player2_endgame(a3, b3, c3,
     counter = 0  # licznik poprawnych zgadnięć
     treasure_position = False
 
-    """
-    player2_state = PlayerState()
-    game_switch = False
-    """
-
     game = Labirynt()
     BOARD = GameState()
     image_treasure = pygame.image.load('red_circle1.png')
@@ -50,16 +38,6 @@ def player2_endgame(a3, b3, c3,
     tick_image = pygame.image.load('green_tick.png')
 
     while True:
-
-        """
-        if game_switch:  # Jeśli gra powinna przejść do gracza 1
-            cross_drawn = True
-            wrong_squares = player2_state.wrong_squares
-            znaleziony_labiryt = player2_state.znaleziony_labiryt
-            counter = player2_state.counter
-            treasure_position = player2_state.treasure_position
-            game_switch = False  # Reset flagi
-        """
 
         play_mouse_pos = pygame.mouse.get_pos()
         location = BOARD.draw_board(screen)
@@ -142,18 +120,6 @@ def player2_endgame(a3, b3, c3,
                         elif c3[0] in get_neighbours(selected_square) and selected_square not in b3:
                             wrong_squares.append(selected_square)
 
-                            """
-                            # Zapisanie stanu gry gracza 1
-                            cross_drawn = False
-                            player2_state.wrong_squares = wrong_squares
-                            player2_state.znaleziony_labiryt = znaleziony_labiryt
-                            player2_state.counter = counter
-                            player2_state.treasure_position = treasure_position
-
-                            player1_endgame(a, b, c, screen)
-                            game_switch = True  # Ustawienie flagi na true, aby gracz 1 mógł kontynuować grę
-                            break
-                            """
 
             if event.type == pygame.QUIT:
                 pygame.quit()
