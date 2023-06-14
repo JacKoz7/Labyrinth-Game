@@ -15,7 +15,7 @@ class First_Stage:
         return pygame.font.Font('Ancient Medium.ttf', size)
 
 
-    def play1(self, screen, txt):
+    def play1(self, screen, txt, ButtonText):
 
         treasure_drawn = False
         labyrinth_drawn = False
@@ -84,7 +84,7 @@ class First_Stage:
             if show_next_move:
                 img = pygame.image.load('empty_button.png')
 
-                button_player2 = button1(image=img, pos=(1050, 500), text_input='Gracz 2 :)', font=self.get_font(65),
+                button_player2 = button1(image=img, pos=(1050, 500), text_input=ButtonText, font=self.get_font(65),
                                       base_color='Black',
                                       new_color='White')
                 button_player2.ChangeColor(play_mouse_pos)
@@ -239,6 +239,9 @@ class First_Stage:
 
                             show_next_move = True
                             print('rozpoczela sie nowa gra')
+                            print(selected_treasure)
+                            print(self.labyrinth)
+                            print(selected_cross)
 
                             # play2(screen, txt2)
                         else:
