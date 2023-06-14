@@ -9,7 +9,7 @@ class GameState():
         for row in range(10):
             for col in range(10):
                 pygame.draw.rect(SCREEN, 'Red', (100 + col * square_size, 50 + row * square_size, square_size, square_size), 2)
-
+#
         # Sprawdzenie, czy kursorem myszy jest zaznaczona komórka
         mouse_x, mouse_y = pygame.mouse.get_pos()
         if 100 <= mouse_x <= 100 + 10 * square_size and 50 <= mouse_y <= 50 + 10 * square_size:
