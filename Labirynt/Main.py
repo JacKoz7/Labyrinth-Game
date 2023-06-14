@@ -149,18 +149,23 @@ def play1(screen, txt):
                                 (row, col) == (gracz1_skarb[0][0], gracz1_skarb[0][1] + 1):
                             selected_squares.append((row, col))
                             labirynt_temp.append((row, col))
+
+                            # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z poprzednim kwadratem na liście
+                            #last_square = selected_squares[-1] zamiast petli
                     else:
-                        # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z poprzednim kwadratem na liście
-                        last_square = selected_squares[-1]
-                        if (row, col) == (last_square[0] - 1, last_square[1]) or \
-                                (row, col) == (last_square[0] + 1, last_square[1]) or \
-                                (row, col) == (last_square[0], last_square[1] - 1) or \
-                                (row, col) == (last_square[0], last_square[1] + 1):
-                            if (row, col) not in selected_squares and (row, col) != gracz1_skarb[0]:
-                                selected_squares.append((row, col))
-                                labirynt_temp.append((row, col))
+                        # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
+                        for last_square in selected_squares:
+                            if (row, col) == (last_square[0] - 1, last_square[1]) or \
+                                    (row, col) == (last_square[0] + 1, last_square[1]) or \
+                                    (row, col) == (last_square[0], last_square[1] - 1) or \
+                                    (row, col) == (last_square[0], last_square[1] + 1):
+                                if (row, col) not in selected_squares and (row, col) != gracz1_skarb[0]:
+                                    selected_squares.append((row, col))
+                                    labirynt_temp.append((row, col))
+                                    break # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
 
                     labirynt_drawn = True
+
                     # Logika sprawdzania czy jest labirynt zamkniety
 
                     # sprawdź, czy dany kwadrat zablokował drogę do celu

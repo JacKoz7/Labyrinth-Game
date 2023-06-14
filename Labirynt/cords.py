@@ -11,7 +11,7 @@ class Player():
         x = self.treasure
         return x
     def return_way35(self):
-        y =self.way35
+        y = self.way35
         return y
     def return_cross(self):
         z = self.cross
