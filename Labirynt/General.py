@@ -83,7 +83,7 @@ class Labirynt:
                     if play_button.CheckForInput(menu_mouse_pos):
                             Player1_beginning.play1(self.SCREEN, self.txt)
                             Player2_beginning.play1(self.SCREEN, self.txt2)
-
+#
                     if options_button.CheckForInput(menu_mouse_pos):
                         self.options()
                     if quit_button.CheckForInput(menu_mouse_pos):
