@@ -1,4 +1,4 @@
-import pygame
+import pygame #
 from General import Labirynt
 from Button import button1
 from Board import GameState

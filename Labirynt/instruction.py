@@ -1,4 +1,4 @@
-def inst(screen, get_font, h):
+def inst(screen, get_font, h): #
     text = 'W tej grze nalezy odnalezc ukryty skarb przeciwnika. Kazdy z graczy posiada plansze w postaci '
     text1 ='dwoch kwadratow wielkosci 10 x 10 kratek. W dowolnej kratce swojego kwadratu umieszczamy skarb'
     text2 ='oznaczony kólkiem i wyznaczamy droge do niego, rysujac labirynt dowolnej dlugosci i szerokosci '
