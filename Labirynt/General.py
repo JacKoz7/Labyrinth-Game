@@ -56,8 +56,7 @@ class Labirynt:
         Player1_ending = Second_Stage(Player1_beginning.treasure,
                                       Player1_beginning.labyrinth,
                                       Player1_beginning.cross)
-
-        Player1_status = Game_status(walls=None, labyrinth_temp=None, counter=0)
+        Player1_status = Game_status()
 
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()

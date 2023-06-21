@@ -5,10 +5,10 @@ from Button import button1
 
 
 class Game_status:
-    def __init__(self, walls, labyrinth_temp, counter):
-        self.walls = walls
-        self.labyrinth_temp = labyrinth_temp  # Znaleziony labirynt
-        self.counter = counter  # licznik poprawnych zgadnięć
+    def __init__(self):
+        self.walls = []
+        self.labyrinth_temp = [] # Znaleziony labirynt
+        self.counter = []  # licznik poprawnych zgadnięć
 
 
 class Second_Stage:
@@ -32,9 +32,6 @@ class Second_Stage:
         cross_drawn = True
         treasure_position = False
 
-        from General import Labirynt
-
-        game = Labirynt()
         BOARD = GameState()
 
         image_treasure = pygame.image.load('red_circle1.png')
@@ -59,7 +56,7 @@ class Second_Stage:
             screen.blit(way_text, way_rect)
 
             if cross_drawn:
-                loc1, loc2 = self.cross
+                loc1, loc2 = self.cross[0]
                 screen.blit(image_krzyzyk, (102 + loc2 * 60, 52 + loc1 * 60))
 
             # Rysowanie scian
@@ -112,11 +109,10 @@ class Second_Stage:
                                     neighbour in labyrinth_temp for neighbour in self.get_neighbours(selected_square)):
                                 if selected_square not in labyrinth_temp:  # Czy kratka nie jest już częścią labiryntu
                                     labyrinth_temp.append(selected_square)  # Dodajemy kratkę do labiryntu
-                                    counter += 1  #Zwiększamy ilość poprawnych kratek
+                                    #counter += 1  #Zwiększamy ilość poprawnych kratek
 
-
-                                    if counter == 5:
-                                        return
+                                   # if counter == 5:
+                                      #  return
 
                                 # skracanie ścieżki, jeżeli ostatnia wybrana kratka nie jest sąsiadująca z żadną ścianą
                                 while labyrinth_temp and not any(
@@ -141,6 +137,8 @@ class Second_Stage:
                     pygame.quit()
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
+                    from General import Labirynt
+                    game = Labirynt()
                     game.main_menu()
 
             pygame.display.update()
