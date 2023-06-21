@@ -56,7 +56,8 @@ class Labirynt:
         Player1_ending = Second_Stage(Player1_beginning.treasure,
                                       Player1_beginning.labyrinth,
                                       Player1_beginning.cross)
-        Player1_status = Game_status()
+
+        Player1_status = Game_status(walls=[], labyrinth_temp=[], counter=0)
 
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
@@ -89,9 +90,10 @@ class Labirynt:
                     if play_button.CheckForInput(menu_mouse_pos):
                             Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
                             #Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
-
-                            Player1_ending.endgame(self.SCREEN, self.txt, Player1_status.walls,
+                            while(True):
+                                Player1_ending.endgame(self.SCREEN, self.txt, Player1_status.walls,
                                                    Player1_status.labyrinth_temp, Player1_status.counter)
+
 
 
                     if options_button.CheckForInput(menu_mouse_pos):

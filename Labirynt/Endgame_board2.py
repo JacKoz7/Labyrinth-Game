@@ -5,11 +5,10 @@ from Button import button1
 
 
 class Game_status:
-    def __init__(self):
-        self.walls = []
-        self.labyrinth_temp = [] # Znaleziony labirynt
-        self.counter = []  # licznik poprawnych zgadnięć
-
+    def __init__(self, walls, labyrinth_temp, counter):
+        self.walls = walls
+        self.labyrinth_temp = labyrinth_temp # Znaleziony labirynt
+        self.counter = counter # licznik poprawnych zgadnięć
 
 class Second_Stage:
     def __init__(self, treasure, labyrinth, cross):
