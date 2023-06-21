@@ -1,5 +1,4 @@
-import pygame #
-from General import Labirynt
+import pygame ##
 from Board import GameState
 from Button import button1
 
@@ -247,6 +246,7 @@ class First_Stage:
                     pygame.quit()
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
+                    from General import Labirynt
                     game = Labirynt()
                     game.main_menu()
                 if event.type == pygame.MOUSEBUTTONDOWN and button_player2 is not None and button_player2.CheckForInput(play_mouse_pos):

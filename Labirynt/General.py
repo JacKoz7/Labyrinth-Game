@@ -3,6 +3,10 @@ from sys import exit
 from Button import button1
 from instruction import inst
 
+from First_move import First_Stage
+from Endgame_board2 import Second_Stage, Game_status
+
+
 
 class Labirynt:
     def __init__(self):
@@ -45,10 +49,15 @@ class Labirynt:
             pygame.display.update()
 
     def main_menu(self):
-        from First_move import First_Stage
 
         Player1_beginning = First_Stage()
         Player2_beginning = First_Stage()
+
+        Player1_ending = Second_Stage(Player1_beginning.treasure,
+                                      Player1_beginning.labyrinth,
+                                      Player1_beginning.cross)
+
+        Player1_status = Game_status(walls=None, labyrinth_temp=None, counter=0)
 
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
@@ -80,7 +89,10 @@ class Labirynt:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.CheckForInput(menu_mouse_pos):
                             Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
-                            Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
+                            #Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
+
+                            Player1_ending.endgame(self.SCREEN, self.txt, Player1_status.walls,
+                                                   Player1_status.labyrinth_temp, Player1_status.counter)
 
 
                     if options_button.CheckForInput(menu_mouse_pos):

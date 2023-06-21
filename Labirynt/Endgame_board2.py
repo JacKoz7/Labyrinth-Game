@@ -1,8 +1,8 @@
-import pygame #
+import pygame  ###
 
 from Board import GameState
 from Button import button1
-from General import Labirynt
+
 
 class Game_status:
     def __init__(self, walls, labyrinth_temp, counter):
@@ -30,11 +30,9 @@ class Second_Stage:
 
         # Dane do zapisania
         cross_drawn = True
-
-        wrong_squares = []
-        znaleziony_labiryt = []
-
         treasure_position = False
+
+        from General import Labirynt
 
         game = Labirynt()
         BOARD = GameState()
@@ -50,7 +48,7 @@ class Second_Stage:
             play_mouse_pos = pygame.mouse.get_pos()
             location = BOARD.draw_board(screen)
 
-            BOARD.draw_small_board(screen, self.counter, tick_image)  #Szkicowanie zielonych green ticków
+            # BOARD.draw_small_board(screen, counter, tick_image)  #Szkicowanie zielonych green ticków
 
             gracz1_text = self.get_font(180).render(txt, True, 'Red')
             gracz1_rect = gracz1_text.get_rect(center=(1050, 100))
@@ -61,26 +59,26 @@ class Second_Stage:
             screen.blit(way_text, way_rect)
 
             if cross_drawn:
-                loc1, loc2 = c3[0]
+                loc1, loc2 = self.cross
                 screen.blit(image_krzyzyk, (102 + loc2 * 60, 52 + loc1 * 60))
 
             # Rysowanie scian
-            for square in wrong_squares:
+            for square in walls:
                 loc1, loc2 = square
                 screen.blit(image_wall, (102 + loc2 * 60, 52 + loc1 * 60))
 
             # Draw the treasure after the walls
             if treasure_position:
-                loc1, loc2 = a3[0]
+                loc1, loc2 = self.treasure
                 screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
-            for square in znaleziony_labiryt:
+            for square in labyrinth_temp:
                 loc1, loc2 = square
                 screen.blit(image_point, (102 + loc2 * 60, 52 + loc1 * 60))
 
             img = pygame.image.load('empty_button.png')
-            button_back = button1(image=img, pos=(1050, 600), text_input='Menu', font=get_font(65), base_color='Black',
-                                  new_color='White')
+            button_back = button1(image=img, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
+                                  base_color='Black', new_color='White')
             button_back.ChangeColor(play_mouse_pos)
             button_back.update(screen)
 
@@ -94,44 +92,50 @@ class Second_Stage:
                         print(selected_square)
                         #
                         # Czy wybrana kratka jest skarbem i czy jest sąsiadująca z jakąkolwiek kratką labiryntu
-                        if selected_square == a3[0] and any(
-                                neighbour in znaleziony_labiryt for neighbour in get_neighbours(selected_square)):
+                        if selected_square == self.treasure and any(
+                                neighbour in labyrinth_temp for neighbour in self.get_neighbours(selected_square)):
                             treasure_position = True  # Zmieniamy flagę wskazującą na znalezienie skarbu
                             continue  # Przechodzimy do następnego zdarzenia
 
                         # Czy wybrana kratka jest sąsiadująca z ostatnią wybraną kratką labiryntu,
                         # nie jest ścianą i nie jest krzyżykiem
-                        if znaleziony_labiryt and selected_square not in b3 and selected_square != c3[0] and any(
-                                neighbour == znaleziony_labiryt[-1] for neighbour in get_neighbours(selected_square)):
-                            wrong_squares.append(selected_square)  # Dodajemy kratkę do listy niewłaściwych ruchów
+                        if labyrinth_temp and selected_square not in self.labyrinth and selected_square != self.treasure and any(
+                                neighbour == labyrinth_temp[-1] for neighbour in self.get_neighbours(selected_square)):
+                            walls.append(selected_square)  # Dodajemy kratkę do listy niewłaściwych ruchów
+                            return
 
-                            endgame_gracza1 = Endgame(a3, b3, c3, wrong_squares)
-                            x, y, z, w = endgame_gracza1.return_treasure(), endgame_gracza1.return_way35(),
-                            endgame_gracza1.return_cross(), endgame_gracza1.return_walls()
-                            player2_endgame(x, y, z, w, screen)
 
-                        elif selected_square in b3:  # Czy wybrana kratka jest w liście poprawnych kwadratów
+                        elif selected_square in self.labyrinth:  # Czy wybrana kratka jest w liście poprawnych kwadratów
+
                             # Czy wybrana kratka jest sąsiadująca z którąkolwiek z już wybranych
-                            if not znaleziony_labiryt or any(
-                                    neighbour in znaleziony_labiryt for neighbour in get_neighbours(selected_square)):
-                                if selected_square not in znaleziony_labiryt:  # Czy kratka nie jest już częścią labiryntu
-                                    znaleziony_labiryt.append(selected_square)  # Dodajemy kratkę do labiryntu
-                                    counter += 1  # Dodajemy kratkę do labiryntu
+                            if not labyrinth_temp or any(
+                                    neighbour in labyrinth_temp for neighbour in self.get_neighbours(selected_square)):
+                                if selected_square not in labyrinth_temp:  # Czy kratka nie jest już częścią labiryntu
+                                    labyrinth_temp.append(selected_square)  # Dodajemy kratkę do labiryntu
+                                    counter += 1  #Zwiększamy ilość poprawnych kratek
+
+
+                                    if counter == 5:
+                                        return
 
                                 # skracanie ścieżki, jeżeli ostatnia wybrana kratka nie jest sąsiadująca z żadną ścianą
-                                while znaleziony_labiryt and not any(
-                                        neighbour in b3 for neighbour in get_neighbours(znaleziony_labiryt[-1])):
-                                    znaleziony_labiryt.pop()
+                                while labyrinth_temp and not any(
+                                        neighbour in self.labyrinth for neighbour in
+                                        self.get_neighbours(labyrinth_temp[-1])):
+                                    labyrinth_temp.pop()
 
                         else:
                             # Czy wybrana kratka jest sąsiadująca z którąkolwiek z kratek labiryntu i nie jest krzyżykiem
-                            if selected_square != c3[0] and any(neighbour in znaleziony_labiryt for neighbour in
-                                                                get_neighbours(selected_square)):
-                                wrong_squares.append(selected_square)
+                            if selected_square != self.cross and any(neighbour in labyrinth_temp for neighbour in
+                                                                     self.get_neighbours(selected_square)):
+                                walls.append(selected_square)
+                                return
 
                             # Pozwolenie na umieszczenie ściany obok krzyżyka
-                            elif c3[0] in get_neighbours(selected_square) and selected_square not in b3:
-                                wrong_squares.append(selected_square)
+                            elif self.cross in self.get_neighbours(
+                                    selected_square) and selected_square not in self.labyrinth:
+                                walls.append(selected_square)
+                                return
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -140,6 +144,3 @@ class Second_Stage:
                     game.main_menu()
 
             pygame.display.update()
-
-
-
