@@ -11,6 +11,12 @@ class First_Stage:
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
 
+    def selected_square(self, location, mouse_x, mouse_y):
+        if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
+            row = location[0]
+            col = location[1]
+
+            return row, col
 
     def play(self, screen, txt, ButtonText):
 
@@ -36,7 +42,11 @@ class First_Stage:
         image_labyrinth = pygame.image.load('red_point1.png')
         image_cross = pygame.image.load('red_krzyzyk1.png')
 
-        button_player2 = None
+        img = pygame.image.load('empty_button.png')
+
+        button_player2 = button1(image=img, pos=(1050, 500), text_input=ButtonText, font=self.get_font(65),
+                                 base_color='Black',
+                                 new_color='White')
 
         while True:
             play_mouse_pos = pygame.mouse.get_pos()
@@ -79,11 +89,7 @@ class First_Stage:
                 screen.blit(step4_text, step4_rect)
 
             if show_next_move:
-                img = pygame.image.load('empty_button.png')
 
-                button_player2 = button1(image=img, pos=(1050, 500), text_input=ButtonText, font=self.get_font(65),
-                                      base_color='Black',
-                                      new_color='White')
                 button_player2.ChangeColor(play_mouse_pos)
                 button_player2.update(screen)
 
@@ -123,113 +129,58 @@ class First_Stage:
                 # Szkicowanie Skarbu
                 if event.type == pygame.MOUSEBUTTONDOWN and not treasure_drawn:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
-                    if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
-                        row = location[0]
-                        col = location[1]
 
-                        selected_treasure = (row, col)
-                        treasure_drawn = True
-                        show_step1 = False
-                        show_step2 = True
+                    selected_treasure = self.selected_square(location, mouse_x, mouse_y)
 
-                        self.labyrinth.append(selected_treasure)  # Dodanie skarbu dla pozniejszegio warunku!
+                    treasure_drawn = True
+                    show_step1 = False
+                    show_step2 = True
+
+                    self.labyrinth.append(selected_treasure)  # Dodanie skarbu dla pozniejszegio warunku!
 
                 # Szkicowanie labiryntu
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 35:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
-                    if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
-                        row = location[0]
-                        col = location[1]
 
-                        selected_labyrinth = (row, col)
+                    selected_labyrinth = self.selected_square(location, mouse_x, mouse_y)
 
+                    # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
+                    for last_square in self.labyrinth:
+                        if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
+                                selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
+                                selected_labyrinth == (last_square[0], last_square[1] - 1) or \
+                                selected_labyrinth == (last_square[0], last_square[1] + 1):
+                            if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
+                                self.labyrinth.append(selected_labyrinth)
+                                break  # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
 
-                        # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
-                        for last_square in self.labyrinth:
-                            if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
-                                    selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
-                                    selected_labyrinth == (last_square[0], last_square[1] - 1) or \
-                                    selected_labyrinth == (last_square[0], last_square[1] + 1):
-                                if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
-                                    self.labyrinth.append(selected_labyrinth)
-                                    break  # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
+                    labyrinth_drawn = True
 
-                        labyrinth_drawn = True
-
-                        # Logika sprawdzania czy jest labirynt zamkniety
-                        blocked = False
-                        """
-                        # Można usunąć ten warunek, ponieważ możemy ustawiać kratki wybierając inne ścieżki
-                        if len(self.labyrinth) > 1:
-                            last_square = self.labyrinth[-1]
-                            if (last_square[0] + 1, last_square[1]) in self.labyrinth and \
-                                    (last_square[0] - 1, last_square[1]) in self.labyrinth and \
-                                    (last_square[0], last_square[1] + 1) in self.labyrinth and \
-                                    (last_square[0], last_square[1] - 1) in self.labyrinth:
-                                blocked = True
-                        """
-
-                        # Czy jest zablokowany na brzegu
-                        if row == 0 and (row + 1, col) in self.labyrinth and \
-                                (row, col + 1) in self.labyrinth and (row, col - 1) in self.labyrinth:
-                            blocked = True
-                        elif row == 9 and (row - 1, col) in self.labyrinth and \
-                                (row, col + 1) in self.labyrinth and (row, col - 1) in self.labyrinth:
-                            blocked = True
-                        elif col == 0 and (row + 1, col) in self.labyrinth and \
-                                (row - 1, col) in self.labyrinth and (row, col + 1) in self.labyrinth:
-                            blocked = True
-                        elif col == 9 and (row + 1, col) in self.labyrinth and \
-                                (row - 1, col) in self.labyrinth and (row, col - 1) in self.labyrinth:
-                            blocked = True
-
-                        # Czy jest zablokowany w rogu
-                        if row == 0 and col == 0 and (row + 1, col) in self.labyrinth and \
-                                (row, col + 1) in self.labyrinth:
-                            blocked = True
-                        elif row == 0 and col == 9 and (row + 1, col) in self.labyrinth and \
-                                (row, col - 1) in self.labyrinth:
-                            blocked = True
-                        elif row == 9 and col == 0 and (row - 1, col) in self.labyrinth and \
-                                (row, col + 1) in self.labyrinth:
-                            blocked = True
-                        elif row == 9 and col == 9 and (row - 1, col) in self.labyrinth and \
-                                (row, col - 1) in self.labyrinth:
-                            blocked = True
-
-                        if blocked:
-                            print("The path is blocked. Please start over.")
-                            must_restart = True
-
-                        if len(self.labyrinth) == 34:
-                            show_step2 = False
-                            show_step3 = True
+                    if len(self.labyrinth) == 34:
+                        show_step2 = False
+                        show_step3 = True
 
                 # Szkicowanie krzyzyka
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(
                         self.labyrinth) == 35 and not cross_drawn:
-                    mouse_x, mouse_y = pygame.mouse.get_pos()
-                    if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
-                        row = location[0]
-                        col = location[1]
 
-                        # sprawdź, czy wybrany kwadrat jest na brzegu
-                        if (row == 0 or row == 9 or col == 0 or col == 9):
-                            selected_cross = (row, col)
-                            cross_drawn = True
-                            show_step3 = False
-                            show_step4 = False
+                    # sprawdź, czy wybrany kwadrat jest na brzegu
+                    if location[0] == 0 or location[0] == 9 or location[1] == 0 or location[1] == 9:
 
-                            self.treasure = self.labyrinth[0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
-                            self.cross = self.labyrinth[-1]
+                        mouse_x, mouse_y = pygame.mouse.get_pos()
+                        selected_cross = self.selected_square(location, mouse_x, mouse_y)
+                        cross_drawn = True
+                        show_step3 = False
+                        show_step4 = False
 
-                            show_next_move = True
-                            print('rozpoczela sie nowa gra')
+                        self.treasure = self.labyrinth[0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
+                        self.cross = self.labyrinth[-1]
 
-                            # play2(screen, txt2)
-                        else:
-                            cross_drawn = False
-                            must_restart = True
+                        show_next_move = True
+                        print('rozpoczela sie nowa gra')
+                    else:
+                        cross_drawn = False
+                        must_restart = True
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -238,7 +189,7 @@ class First_Stage:
                     from General import Labirynt
                     game = Labirynt()
                     game.main_menu()
-                if event.type == pygame.MOUSEBUTTONDOWN and button_player2 is not None and button_player2.CheckForInput(play_mouse_pos):
+                if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):
                     return
 
             pygame.display.update()

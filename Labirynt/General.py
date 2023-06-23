@@ -7,7 +7,6 @@ from First_move import First_Stage
 from Endgame_board2 import Second_Stage, Game_status
 
 
-
 class Labirynt:
     def __init__(self):
         pygame.init()
@@ -53,11 +52,8 @@ class Labirynt:
         Player1_beginning = First_Stage()
         Player2_beginning = First_Stage()
 
-        Player1_ending = Second_Stage(Player1_beginning.treasure,
-                                      Player1_beginning.labyrinth,
-                                      Player1_beginning.cross)
-
-        Player1_status = Game_status(walls=[], labyrinth_temp=[], counter=0)
+        Player1_status = Game_status(walls=[], found_labyrinth=[], winner=False)
+        Player2_status = Game_status(walls=[], found_labyrinth=[], winner=False)
 
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
@@ -89,19 +85,24 @@ class Labirynt:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.CheckForInput(menu_mouse_pos):
                             Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
-                            print(Player1_beginning.treasure)
-                            print(Player1_beginning.labyrinth)
-                            print(Player1_beginning.cross)
+                            Player1_ending = Second_Stage(Player1_beginning.treasure,
+                                                          Player1_beginning.labyrinth,
+                                                          Player1_beginning.cross)
 
-                            #Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
-                            i = 0
-                            while(i <= 3):
-                                Player1_ending.endgame(self.SCREEN, self.txt, Player1_status.walls,
-                                                   Player1_status.labyrinth_temp, Player1_status.counter)
-                                i += 1
+                            Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
+                            Player2_ending = Second_Stage(Player2_beginning.treasure,
+                                                          Player2_beginning.labyrinth,
+                                                          Player2_beginning.cross)
 
+                            while Player1_status.winner is False and Player2_status.winner is False:
 
+                                if Player1_status.winner is False:
+                                    Player2_ending.endgame(self.SCREEN, self.txt, self.txt2, Player1_status.walls,
+                                                           Player1_status.found_labyrinth, Player2_status.winner)
 
+                                if Player2_status.winner is False:
+                                    Player1_ending.endgame(self.SCREEN, self.txt2, self.txt, Player2_status.walls,
+                                                           Player2_status.found_labyrinth, Player1_status.winner)
 
                     if options_button.CheckForInput(menu_mouse_pos):
                         self.options()
