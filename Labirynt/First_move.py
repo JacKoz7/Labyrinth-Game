@@ -1,4 +1,4 @@
-import pygame
+import pygame #
 from Board import GameState
 from Button import button1
 
@@ -15,8 +15,9 @@ class First_Stage:
         if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
             row = location[0]
             col = location[1]
-
             return row, col
+        else:
+            return None
 
     def play(self, screen, txt, ButtonText):
 
@@ -123,6 +124,7 @@ class First_Stage:
                     show_step4 = True
 
                     selected_treasure = None
+                    selected_cross = None
 
                     must_restart = False
 
@@ -132,52 +134,57 @@ class First_Stage:
 
                     selected_treasure = self.selected_square(location, mouse_x, mouse_y)
 
-                    treasure_drawn = True
-                    show_step1 = False
-                    show_step2 = True
+                    if selected_treasure is not None:
+                        treasure_drawn = True
+                        show_step1 = False
+                        show_step2 = True
 
-                    self.labyrinth.append(selected_treasure)  # Dodanie skarbu dla pozniejszegio warunku!
+                        self.labyrinth.append(selected_treasure)  # Dodanie skarbu dla pozniejszegio warunku!
 
                 # Szkicowanie labiryntu
-                if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 35:
+                if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 37:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
 
                     selected_labyrinth = self.selected_square(location, mouse_x, mouse_y)
 
-                    # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
-                    for last_square in self.labyrinth:
-                        if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
-                                selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
-                                selected_labyrinth == (last_square[0], last_square[1] - 1) or \
-                                selected_labyrinth == (last_square[0], last_square[1] + 1):
-                            if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
-                                self.labyrinth.append(selected_labyrinth)
-                                break  # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
+                    if selected_labyrinth is not None:
+                        # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
+                        for last_square in self.labyrinth:
+                            if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
+                                    selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
+                                    selected_labyrinth == (last_square[0], last_square[1] - 1) or \
+                                    selected_labyrinth == (last_square[0], last_square[1] + 1):
+                                if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
+                                    self.labyrinth.append(selected_labyrinth)
+                                    break  # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
 
-                    labyrinth_drawn = True
+                        labyrinth_drawn = True
 
-                    if len(self.labyrinth) == 34:
-                        show_step2 = False
-                        show_step3 = True
+                        if len(self.labyrinth) == 36:
+                            show_step2 = False
+                            show_step3 = True
 
                 # Szkicowanie krzyzyka
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(
-                        self.labyrinth) == 35 and not cross_drawn:
+                        self.labyrinth) == 37 and not cross_drawn:
 
                     # sprawdź, czy wybrany kwadrat jest na brzegu
                     if location[0] == 0 or location[0] == 9 or location[1] == 0 or location[1] == 9:
 
                         mouse_x, mouse_y = pygame.mouse.get_pos()
                         selected_cross = self.selected_square(location, mouse_x, mouse_y)
-                        cross_drawn = True
-                        show_step3 = False
-                        show_step4 = False
 
-                        self.treasure = self.labyrinth[0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
-                        self.cross = self.labyrinth[-1]
+                        if selected_cross is not None:
+                            cross_drawn = True
+                            show_step3 = False
+                            show_step4 = False
 
-                        show_next_move = True
-                        print('rozpoczela sie nowa gra')
+                            self.treasure = self.labyrinth[
+                                0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
+                            self.cross = self.labyrinth[-1]
+
+                            show_next_move = True
+                            print('rozpoczela sie nowa gra')
                     else:
                         cross_drawn = False
                         must_restart = True

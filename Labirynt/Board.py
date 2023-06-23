@@ -13,7 +13,7 @@ class GameState():
 #
         # Sprawdzenie, czy kursorem myszy jest zaznaczona komórka
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        if 100 <= mouse_x <= 100 + 10 * self.square_size and 50 <= mouse_y <= 50 + 10 * self.square_size:
+        if 100 <= mouse_x <= 99 + 10 * self.square_size and 50 <= mouse_y <= 49 + 10 * self.square_size:
             selected_col = (mouse_x - 100) // self.square_size #square size = 60 pierwszy index w tablicy
             selected_row = (mouse_y - 50) // self.square_size #drugi index w tablicy
 
