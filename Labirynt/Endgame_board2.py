@@ -7,8 +7,8 @@ from Button import button1
 class Game_status:
     def __init__(self, walls, labyrinth_temp, counter):
         self.walls = walls
-        self.labyrinth_temp = labyrinth_temp # Znaleziony labirynt
-        self.counter = counter # licznik poprawnych zgadnięć
+        self.labyrinth_temp = labyrinth_temp  # Znaleziony labirynt
+        self.counter = counter  # licznik poprawnych zgadnięć
 
 class Second_Stage:
     def __init__(self, treasure, labyrinth, cross):
@@ -54,8 +54,12 @@ class Second_Stage:
             way_rect = gracz1_text.get_rect(center=(1000, 300))
             screen.blit(way_text, way_rect)
 
+            print(self.treasure)
+            print(self.labyrinth)
+            print(self.cross)
+
             if cross_drawn:
-                loc1, loc2 = self.cross[0]
+                loc1, loc2 = self.cross
                 screen.blit(image_krzyzyk, (102 + loc2 * 60, 52 + loc1 * 60))
 
             # Rysowanie scian

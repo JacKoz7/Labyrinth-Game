@@ -89,10 +89,17 @@ class Labirynt:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.CheckForInput(menu_mouse_pos):
                             Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
+                            print(Player1_beginning.treasure)
+                            print(Player1_beginning.labyrinth)
+                            print(Player1_beginning.cross)
+
                             #Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
-                            while(True):
+                            i = 0
+                            while(i <= 3):
                                 Player1_ending.endgame(self.SCREEN, self.txt, Player1_status.walls,
                                                    Player1_status.labyrinth_temp, Player1_status.counter)
+                                i += 1
+
 
 
 

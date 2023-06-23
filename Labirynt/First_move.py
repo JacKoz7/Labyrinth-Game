@@ -4,9 +4,9 @@ from Button import button1
 
 class First_Stage:
     def __init__(self):
-        self.treasure = []
+        self.treasure = (0, 0)
         self.labyrinth = []
-        self.cross = []
+        self.cross = (0, 0)
 
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
@@ -143,35 +143,23 @@ class First_Stage:
 
                         selected_labyrinth = (row, col)
 
-                        # Mozliwosc ustawienia kwadratow
-                        if len(self.labyrinth) == 0:
-                            # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z kwadratem skarbu
-                            if selected_labyrinth == (self.treasure[0][0] - 1, self.treasure[0][1]) or \
-                                    selected_labyrinth == (self.treasure[0][0] + 1, self.treasure[0][1]) or \
-                                    selected_labyrinth == (self.treasure[0][0], self.treasure[0][1] - 1) or \
-                                    selected_labyrinth == (self.treasure[0][0], self.treasure[0][1] + 1):
-                                self.labyrinth.append(selected_labyrinth)
 
-                                # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z poprzednim kwadratem na liście
-                                # last_square = labyrinth[-1] zamiast petli
-                        else:
-                            # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
-                            for last_square in self.labyrinth:
-                                if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
-                                        selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
-                                        selected_labyrinth == (last_square[0], last_square[1] - 1) or \
-                                        selected_labyrinth == (last_square[0], last_square[1] + 1):
-                                    if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
-                                        self.labyrinth.append(selected_labyrinth)
-                                        break  # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
+                        # sprawdź, czy aktualnie wybrany kwadrat sąsiaduje z dowolnym kwadratem z listy
+                        for last_square in self.labyrinth:
+                            if selected_labyrinth == (last_square[0] - 1, last_square[1]) or \
+                                    selected_labyrinth == (last_square[0] + 1, last_square[1]) or \
+                                    selected_labyrinth == (last_square[0], last_square[1] - 1) or \
+                                    selected_labyrinth == (last_square[0], last_square[1] + 1):
+                                if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
+                                    self.labyrinth.append(selected_labyrinth)
+                                    break  # przerwij pętlę, jeżeli znaleźliśmy pasujący kwadrat
 
                         labyrinth_drawn = True
 
                         # Logika sprawdzania czy jest labirynt zamkniety
-
-                        # sprawdź, czy dany kwadrat zablokował drogę do celu
-                        # Rownierz, sprawdzenie czy skarb nie zablokował drogę do celu (wczesniej labirynt temp)
                         blocked = False
+                        """
+                        # Można usunąć ten warunek, ponieważ możemy ustawiać kratki wybierając inne ścieżki
                         if len(self.labyrinth) > 1:
                             last_square = self.labyrinth[-1]
                             if (last_square[0] + 1, last_square[1]) in self.labyrinth and \
@@ -179,6 +167,7 @@ class First_Stage:
                                     (last_square[0], last_square[1] + 1) in self.labyrinth and \
                                     (last_square[0], last_square[1] - 1) in self.labyrinth:
                                 blocked = True
+                        """
 
                         # Czy jest zablokowany na brzegu
                         if row == 0 and (row + 1, col) in self.labyrinth and \
@@ -231,8 +220,8 @@ class First_Stage:
                             show_step3 = False
                             show_step4 = False
 
-                            self.treasure.append((self.labyrinth[0]))  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
-                            self.cross.append(self.labyrinth[-1])
+                            self.treasure = self.labyrinth[0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
+                            self.cross = self.labyrinth[-1]
 
                             show_next_move = True
                             print('rozpoczela sie nowa gra')
