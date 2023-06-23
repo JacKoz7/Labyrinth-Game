@@ -110,8 +110,11 @@ class Second_Stage:
                                     self.correct_squares.append(selected_square)
                                     counter += 1
 
-                                if counter == 5:
+                                if counter == 5 and selected_square != self.treasure:
                                     return
+
+                                elif counter == 4 and selected_square == self.treasure:
+                                    counter += 1
 
                                 if selected_square == self.treasure:
                                     treasure_drawn = True

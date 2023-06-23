@@ -179,8 +179,7 @@ class First_Stage:
                             show_step3 = False
                             show_step4 = False
 
-                            self.treasure = self.labyrinth[
-                                0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
+                            self.treasure = self.labyrinth[0]  # Zapisanie skarbu oraz krzyżyka, gdy labirynt jest spełniony
                             self.cross = self.labyrinth[-1]
 
                             show_next_move = True
