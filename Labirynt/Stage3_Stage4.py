@@ -48,13 +48,7 @@ class Second_Stage:
 
         img = pygame.image.load('empty_button.png')
 
-        # Tworzenie przycisków.
-        winner_button = button1(image=img, pos=(700, 500), text_input="Menu", font=self.get_font(65),
-                                base_color='Black',
-                                new_color='White')
-        play_again_button = button1(image=img, pos=(700, 350), text_input="Od Nowa", font=self.get_font(65),
-                                    base_color='Black', new_color='White')
-
+        # Tworzenie przycisku
         button_back = button1(image=img, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                               base_color='Black',
                               new_color='White')
@@ -107,11 +101,31 @@ class Second_Stage:
             if winner: #co się dzieje po tym jak ktoś wygra
                 screen.fill('black')
                 screen.blit(winner_text, winner_rect)
-                winner_button.ChangeColor(play_mouse_pos)
-                winner_button.update(screen)
+
+                winner_button_menu = button1(image=img, pos=(700, 500), text_input="Menu", font=self.get_font(65),
+                                             base_color='Black',
+                                             new_color='White')
+                play_again_button = button1(image=img, pos=(700, 350), text_input="Od Nowa", font=self.get_font(65),
+                                            base_color='Black', new_color='White')
+
+                winner_button_menu.ChangeColor(play_mouse_pos)
+                winner_button_menu.update(screen)
 
                 play_again_button.ChangeColor(play_mouse_pos)
                 play_again_button.update(screen)
+
+                for event in pygame.event.get():
+                    # Jeżeli kliknięto przycisk wygrywający...
+                    if event.type == pygame.MOUSEBUTTONDOWN and winner_button_menu.CheckForInput(play_mouse_pos):
+                        from Main import Labirynt
+                        game = Labirynt()
+                        game.main_menu()  # Przejście do menu głównego gry.
+
+                    # Jeżeli kliknięto przycisk "Zagraj ponownie"...
+                    if event.type == pygame.MOUSEBUTTONDOWN and play_again_button.CheckForInput(play_mouse_pos):
+                        from Main import Labirynt
+                        game = Labirynt(auto_start=False)
+                        game.game_process()  # Rozpoczyna nową grę.
 
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and cross_drawn:
@@ -154,17 +168,12 @@ class Second_Stage:
                                     walls.append(selected_square)  # Dodaje do listy ścian.
                                     return  # Kończy działanie funkcji.
 
-                # Jeżeli kliknięto przycisk wygrywający...
-                if event.type == pygame.MOUSEBUTTONDOWN and winner_button.CheckForInput(play_mouse_pos):
+
+
+                if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
                     from Main import Labirynt
                     game = Labirynt()
-                    game.main_menu()  # Przejście do menu głównego gry.
-
-                # Jeżeli kliknięto przycisk "Zagraj ponownie"...
-                if event.type == pygame.MOUSEBUTTONDOWN and play_again_button.CheckForInput(play_mouse_pos):
-                    from Main import Labirynt
-                    game = Labirynt(auto_start=False)
-                    game.game_process()  # Rozpoczyna nową grę.
+                    game.main_menu()
 
                 # Jeżeli zamknięto okno gry...
                 if event.type == pygame.QUIT:
