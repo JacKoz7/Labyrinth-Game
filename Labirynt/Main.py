@@ -6,6 +6,7 @@ from instruction import inst
 from Stage1_Stage2 import First_Stage
 from Stage3_Stage4 import Second_Stage, Game_status
 
+
 # Definicja klasy Labirynt
 class Labirynt:
     # Konstruktor klasy, inicjalizuje podstawowe atrybuty
@@ -26,19 +27,19 @@ class Labirynt:
 
     # Metoda reprezentująca proces gry
     def game_process(self):
-        Player1_beginning = First_Stage()   # Tworzenie obiektu pierwszego etapu gry
-        Player2_beginning = First_Stage()   # Tworzenie obiektu drugiego etapu gry
+        Player1_beginning = First_Stage()  # Tworzenie obiektu pierwszego etapu gry
+        Player2_beginning = First_Stage()  # Tworzenie obiektu drugiego etapu gry
 
         Player1_status = Game_status(walls=[], found_labyrinth=[], winner=False)  # Status gry gracza 1
         Player2_status = Game_status(walls=[], found_labyrinth=[], winner=False)  # Status gry gracza 2
 
         Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
-        Player1_ending = Second_Stage(Player1_beginning.treasure,   #obiekt trzeciego etapu gry
+        Player1_ending = Second_Stage(Player1_beginning.treasure,  # obiekt trzeciego etapu gry
                                       Player1_beginning.labyrinth,
                                       Player1_beginning.cross)
 
         Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
-        Player2_ending = Second_Stage(Player2_beginning.treasure,     #obiekt czwartego etapu gry
+        Player2_ending = Second_Stage(Player2_beginning.treasure,  # obiekt czwartego etapu gry
                                       Player2_beginning.labyrinth,
                                       Player2_beginning.cross)
 
@@ -126,6 +127,7 @@ class Labirynt:
     # Metoda slużąca do uruchomienia gry
     def run(self):
         self.main_menu()
+
 
 # Instrukcja warunkowa sprawdzająca, czy skrypt jest uruchamiany bezpośrednio czy importowany
 if __name__ == "__main__":

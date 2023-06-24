@@ -7,7 +7,7 @@ from Button import button1
 class Game_status:
     def __init__(self, walls, found_labyrinth, winner):
         self.walls = walls
-        self.found_labyrinth = found_labyrinth  # Znaleziony labirynt
+        self.found_labyrinth = found_labyrinth
         self.winner = winner
 
 # Klasa Second_Stage reprezentuje kolejne etapy gry.
@@ -34,8 +34,9 @@ class Second_Stage:
     def endgame(self, screen, txt, txt2, walls, labyrinth_temp, winner):
         # Inicjalizacja flag i zmiennych.
         cross_drawn = True
-        treasure_drawn = False
         counter = 0
+
+        pause = False
 
         # Inicjalizacja obiektu stanu planszy.
         BOARD = GameState()
@@ -89,9 +90,6 @@ class Second_Stage:
                 screen.blit(image_wall, (102 + loc2 * 60, 52 + loc1 * 60))
 
             # rysowanie skarbu po narysowaniu scian
-            if treasure_drawn:
-                loc1, loc2 = self.treasure
-                screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
             for square in labyrinth_temp:
                 loc1, loc2 = square
@@ -99,6 +97,11 @@ class Second_Stage:
                     screen.blit(image_point, (102 + loc2 * 60, 52 + loc1 * 60))
 
             if winner: #co się dzieje po tym jak ktoś wygra
+
+                if pause is False:
+                    pygame.time.delay(3000)
+                    pause = True
+
                 screen.fill('black')
                 screen.blit(winner_text, winner_rect)
 
@@ -155,11 +158,19 @@ class Second_Stage:
 
                                 # Jeżeli licznik wynosi 4 i wybrane pole to skarb...
                                 elif counter == 4 and selected_square == self.treasure:
+
                                     counter += 1  # Zwiększa licznik.
 
                                 # Jeżeli wybrane pole to skarb...
                                 if selected_square == self.treasure:
-                                    treasure_drawn = True  # Ustawia rysowania skarbu na prawdę.
+
+                                    # Wyświetlanie skarbu
+                                    loc1, loc2 = self.treasure
+                                    screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
+
+                                    # Wyświetlanie 5 fajki
+                                    BOARD.draw_small_board(screen, counter)
+
                                     winner = True  # Ustawia wartość wygranej na prawdę.
 
                             else:
@@ -167,8 +178,6 @@ class Second_Stage:
                                 if selected_square not in walls:
                                     walls.append(selected_square)  # Dodaje do listy ścian.
                                     return  # Kończy działanie funkcji.
-
-
 
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
                     from Main import Labirynt
