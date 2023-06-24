@@ -1,16 +1,21 @@
-import pygame #
+# Importowanie modułu pygame oraz innych modułów niezbędnych do działania gry
+import pygame
 from Board import GameState
 from Button import button1
 
+# Klasa reprezentująca pierwszą fazę gry
 class First_Stage:
+    # Konstruktor klasy, inicjalizuje podstawowe atrybuty
     def __init__(self):
-        self.treasure = (0, 0)
-        self.labyrinth = []
-        self.cross = (0, 0)
+        self.treasure = (0, 0)  # Pozycja skarbu
+        self.labyrinth = []  # Lista przechowująca elementy labiryntu
+        self.cross = (0, 0)  # Pozycja krzyża
 
+    # Metoda zwracająca czcionkę o określonym rozmiarze
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
 
+    # Metoda zwracająca współrzędne wybranego pola
     def selected_square(self, location, mouse_x, mouse_y):
         if location is not None and (100 <= mouse_x <= 100 + 10 * 60 and 50 <= mouse_y <= 50 + 10 * 60):
             row = location[0]
@@ -19,33 +24,35 @@ class First_Stage:
         else:
             return None
 
+    # Metoda odpowiedzialna za rozgrywkę
     def play(self, screen, txt, ButtonText):
 
-        treasure_drawn = False
-        labyrinth_drawn = False
-        cross_drawn = False
+        treasure_drawn = False  # Czy skarb został narysowany
+        labyrinth_drawn = False  # Czy labirynt został narysowany
+        cross_drawn = False  # Czy krzyż został narysowany
 
-        show_step1 = True
-        show_step2 = False
-        show_step3 = False
-        show_step4 = False
+        show_step1 = True  # Czy pokazać krok 1
+        show_step2 = False  # Czy pokazać krok 2
+        show_step3 = False  # Czy pokazać krok 3
+        show_step4 = False  # Czy pokazać krok 4
 
-        show_next_move = False
+        show_next_move = False  # Czy pokazać następny ruch
 
-        selected_treasure = None
-        selected_cross = None
+        selected_treasure = None  # Wybrany skarb
+        selected_cross = None  # Wybrany krzyż
 
-        must_restart = False
+        must_restart = False  # Czy należy zrestartować
 
-        BOARD = GameState()
+        BOARD = GameState()  # Tworzenie instancji klasy GameState
 
+        # Ładowanie obrazów
         image_treasure = pygame.image.load('red_circle1.png')
         image_labyrinth = pygame.image.load('red_point1.png')
         image_cross = pygame.image.load('red_krzyzyk1.png')
-
         img = pygame.image.load('empty_button.png')
 
-        button_player2 = button1(image=img, pos=(1050, 500), text_input=ButtonText, font=self.get_font(65),
+        # Tworzenie przycisku
+        button_player2 = button1(image=img, pos=(1050, 480), text_input=ButtonText, font=self.get_font(65),
                                  base_color='Black',
                                  new_color='White')
 
@@ -74,7 +81,7 @@ class First_Stage:
             # Powrót
             img = pygame.image.load('empty_button.png')
 
-            button_back = button1(image=img, pos=(1050, 600), text_input='Powrót', font=self.get_font(65),
+            button_back = button1(image=img, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                                   base_color='Black',
                                   new_color='White')
             button_back.ChangeColor(play_mouse_pos)
@@ -88,6 +95,9 @@ class First_Stage:
                 screen.blit(step3_text, ste3_rect)
             if show_step4:
                 screen.blit(step4_text, step4_rect)
+
+                # Sekcja kodu obsługująca zasady gry i mechanikę: rysowanie skarbów, labiryntu, krzyża
+                # na planszy i reagowanie na ruchy gracza.
 
             if show_next_move:
 
@@ -183,7 +193,7 @@ class First_Stage:
                             self.cross = self.labyrinth[-1]
 
                             show_next_move = True
-                            print('rozpoczela sie nowa gra')
+                            #print('rozpoczela sie nowa gra')           #debug
                     else:
                         cross_drawn = False
                         must_restart = True
@@ -192,7 +202,7 @@ class First_Stage:
                     pygame.quit()
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
-                    from General import Labirynt
+                    from Main import Labirynt
                     game = Labirynt()
                     game.main_menu()
                 if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):

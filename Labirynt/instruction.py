@@ -1,4 +1,6 @@
-def inst(screen, get_font, h): #
+
+# funkcja służąca do wyświetlania instrukcji gry na ekran
+def inst(screen, get_font, h):
     text = 'W tej grze nalezy odnalezc ukryty skarb przeciwnika. Kazdy z graczy posiada plansze w postaci '
     text1 ='dwoch kwadratow wielkosci 10 x 10 kratek. W dowolnej kratce swojego kwadratu umieszczamy skarb'
     text2 ='oznaczony kólkiem i wyznaczamy droge do niego, rysujac labirynt dowolnej dlugosci i szerokosci '
@@ -47,5 +49,10 @@ def inst(screen, get_font, h): #
     inst_text11 = get_font.render(text11, True, 'Red')
     inst_rect11 = inst_text.get_rect(center=(h - 35, 630))
     screen.blit(inst_text11, inst_rect11)
+
+    creators = "Twórcy: Jacek Kozlowski i Mykhailo Kapustianyk"
+    creators_text = get_font.render(creators, True, 'Red')
+    creators_rect = creators_text.get_rect(center=(1070, 30))
+    screen.blit(creators_text, creators_rect)
 
 
