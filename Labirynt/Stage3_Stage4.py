@@ -48,7 +48,7 @@ class Second_Stage:
 
         img = pygame.image.load('empty_button.png')
 
-        # Tworzenie przycisku
+        # Tworzenie przycisku #
         button_back = button1(image=img, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                               base_color='Black',
                               new_color='White')
