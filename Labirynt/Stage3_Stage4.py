@@ -189,9 +189,8 @@ class Second_Stage:
                                     loc1, loc2 = self.treasure
                                     screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
-                                    if counter == 5:
-                                        # Wyświetlanie 5 fajki dla skarbu
-                                        BOARD.draw_small_board(screen, counter)
+                                    # Wyświetlanie fajki dla skarbu
+                                    BOARD.draw_small_board(screen, counter)
 
                                     winner = True  # Ustawia wartość wygranej na prawdę
 
