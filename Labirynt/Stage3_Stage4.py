@@ -70,8 +70,8 @@ class Second_Stage:
             player_rect = player_text.get_rect(center=(1050, 100))
             screen.blit(player_text, player_rect)
 
-            path_text = self.get_font(50).render(txt2 + ' odnajdz droge do skarbu!', True, 'Red')
-            path_rect = player_text.get_rect(center=(1000, 300))
+            path_text = self.get_font(50).render('odnajdz droge do skarbu przeciwnika ', True, 'Red')
+            path_rect = player_text.get_rect(center=(970, 300))
 
             winner_text = self.get_font(70).render('Wygrywa ' + txt, True, 'Red')
             winner_rect = winner_text.get_rect(center=(700, 185))
