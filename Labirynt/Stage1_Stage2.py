@@ -27,6 +27,7 @@ class First_Stage:
     # Metoda odpowiedzialna za rozgrywkę
     def play(self, screen, txt, ButtonText):
 
+
         # Logika gry
         treasure_drawn = False  # Czy skarb został narysowany
         labyrinth_drawn = False  # Czy labirynt został narysowany
@@ -52,12 +53,8 @@ class First_Stage:
         image_cross = pygame.image.load('red_krzyzyk1.png')
         img = pygame.image.load('empty_button.png')
 
-        # Tworzenie przycisku
-        button_player2 = button(image=img, pos=(1050, 480), text_input=ButtonText, font=self.get_font(65),
-                                base_color='Black',
-                                new_color='White')
-
         while True:
+
             play_mouse_pos = pygame.mouse.get_pos()
 
             location = BOARD.draw_board(screen)
@@ -98,8 +95,17 @@ class First_Stage:
             if show_step4:
                 screen.blit(step4_text, step4_rect)
             if show_next_move:
+                # Tworzenie przycisku
+                button_player2 = button(image=img, pos=(1050, 480), text_input=ButtonText, font=self.get_font(65),
+                                        base_color='Black',
+                                        new_color='White')
                 button_player2.ChangeColor(play_mouse_pos)
                 button_player2.update(screen)
+
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):
+                        return
+
 
             # Rysowanie skarbu, labiryntu i krzyża na planszy w zależności od stanu gry
             if treasure_drawn:
@@ -218,7 +224,6 @@ class First_Stage:
                     game = Labirynt()
                     game.main_menu()
                 # Przejście do następnego Gracza / do 2 Etapu Gry
-                if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):
-                    return
+
 
             pygame.display.update()  # Aktualizuje wyświetlaną grafikę gry

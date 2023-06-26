@@ -63,7 +63,7 @@ class Second_Stage:
             play_mouse_pos = pygame.mouse.get_pos()
             location = BOARD.draw_board(screen)
 
-            BOARD.draw_small_board(screen, counter)  # Szkicowanie zielonych green ticków
+            BOARD.draw_small_board(screen, counter, walls)  # Szkicowanie zielonych green ticków
 
             # Rysowanie i wyświetlanie informacji tekstowych na ekranie
             gracz1_text = self.get_font(180).render(txt, True, 'Red')
@@ -73,8 +73,11 @@ class Second_Stage:
             way_text = self.get_font(50).render('Odnajdz droge do skarbu ' + txt2, True, 'Red')
             way_rect = gracz1_text.get_rect(center=(1000, 300))
 
-            winner_text = self.get_font(100).render(txt + ' Wygrywa Gratulacje :)', True, 'Red')
-            winner_rect = winner_text.get_rect(center=(700, 100))
+            winner_text = self.get_font(70).render('Wygrywa ' + txt, True, 'Red')
+            winner_rect = winner_text.get_rect(center=(700, 185))
+
+            congrats = self.get_font(160).render('Gratulacje', True, 'Red')
+            congrat_rect = congrats.get_rect(center=(700, 80))
 
             button_back.ChangeColor(play_mouse_pos)  # Aktualizowanie koloru przycisku "wróć"
             button_back.update(screen)
@@ -98,17 +101,22 @@ class Second_Stage:
 
             # Zatrzymanie gry, aby zobaczyć ostatnią ścianę oraz kratki labiryntu
             if point or wall:
-                pygame.time.delay(1000)
+                pygame.time.delay(800)
                 return
 
             if winner:  # Jeżeli jest zwycięzca
 
                 if pause is False:  # Zatrzymanie gry, aby zobaczyć znaleziony skarb
-                    pygame.time.delay(3000)
+                    pygame.time.delay(2000)
                     pause = True
 
                 screen.fill('black')  # Wypełnienie ekranu kolorem czarnym
+                bg = pygame.image.load("game_background.png")
+                screen.blit(bg, (0, 0))
+                # bg2 = pygame.image.load("cool_red_bg.png")
+                # screen.blit(bg2, (0, 0))
                 screen.blit(winner_text, winner_rect)  # Wyświetlanie tekstu zwycięzcy
+                screen.blit(congrats, congrat_rect)
 
                 # Tworzenie przycisków menu i graj ponownie
                 winner_button_menu = button(image=img, pos=(700, 500), text_input="Menu", font=self.get_font(65),
@@ -174,7 +182,7 @@ class Second_Stage:
                                     screen.blit(image_point, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     # Wyświetlanie 5 fajki dla kratki
-                                    BOARD.draw_small_board(screen, counter)
+                                    BOARD.draw_small_board(screen, counter, walls)
 
                                     point = True  # Pomocnicza zmienna
 
@@ -191,7 +199,7 @@ class Second_Stage:
 
                                     if counter == 5:
                                         # Wyświetlanie 5 fajki dla skarbu
-                                        BOARD.draw_small_board(screen, counter)
+                                        BOARD.draw_small_board(screen, counter, walls)
 
                                     winner = True  # Ustawia wartość wygranej na prawdę
 

@@ -17,6 +17,8 @@ class Labirynt:
         pygame.display.set_caption('Labirynt')  # Ustawianie tytułu okna
         self.txt2 = 'Gracz 2'
         self.txt = 'Gracz 1'
+        self.icon = pygame.image.load("game_icon.png")
+        pygame.display.set_icon(self.icon)
 
         if auto_start:
             self.main_menu()  # Wywołanie metody main_menu przy tworzeniu obiektu
@@ -37,7 +39,7 @@ class Labirynt:
         Player2_status = Game_status(walls=[], found_labyrinth=[], winner=False)
 
         # Wyłowanie metody pierwszego etapu gry dla Gracza 1
-        Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 :)')
+        Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 ')
 
         # Tworzenie obiektu 2 etapu gry dla Gracza 1 przy pomocy 'konstruktora z parametrami'
         Player1_ending = Second_Stage(Player1_beginning.treasure,
@@ -98,7 +100,8 @@ class Labirynt:
     def main_menu(self):
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
-            self.SCREEN.fill('Black')
+            bg = pygame.image.load("game_background.png")
+            self.SCREEN.blit(bg, (0,0))
             menu_text = self.get_font(200).render('Labirynt', True, 'Red')
             menu_rect = menu_text.get_rect(center=(self.h, 100))
 

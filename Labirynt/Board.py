@@ -8,6 +8,7 @@ class GameState:
         self.selected_point = None  # Początkowo żadne pole nie jest zaznaczone
         self.square_size = 60  # Rozmiar pola
         self.tick_image = pygame.image.load('green_tick.png')  # Obrazek zielonej fajki
+        self.x = pygame.image.load("Red_X.png")
 
     # Metoda zwracająca obiekt czcionki
     def get_font(self, size):
@@ -42,7 +43,7 @@ class GameState:
             return None
 
     # Metoda rysująca małą planszę służącą do zaznaczania fajek w 2 etapie gry
-    def draw_small_board(self, SCREEN, counter):
+    def draw_small_board(self, SCREEN, counter, walls):
         for x in range(5):  # Pętla przez 5 pól
             pygame.draw.rect(SCREEN, 'Red',
                              (900 + x * self.square_size, 330 + self.square_size, self.square_size, self.square_size),
@@ -50,3 +51,7 @@ class GameState:
             if x < counter:  # Jeżeli jest mniej zaznaczonych pól niż licznik
                 SCREEN.blit(self.tick_image,
                             (900 + x * self.square_size, 330 + self.square_size))  # Rysowanie zielonej fajki
+
+            if x in walls:
+                SCREEN.blit(self.x,
+                            (900 + x * self.square_size, 330 + self.square_size))
