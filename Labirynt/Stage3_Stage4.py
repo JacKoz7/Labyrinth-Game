@@ -63,7 +63,7 @@ class Second_Stage:
             play_mouse_pos = pygame.mouse.get_pos()
             location = BOARD.draw_board(screen)
 
-            BOARD.draw_small_board(screen, counter, walls)  # Szkicowanie zielonych green ticków
+            BOARD.draw_small_board(screen, counter, wall)  # Szkicowanie zielonych green ticków
 
             # Rysowanie i wyświetlanie informacji tekstowych na ekranie
             gracz1_text = self.get_font(180).render(txt, True, 'Red')
@@ -182,13 +182,9 @@ class Second_Stage:
                                     screen.blit(image_point, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     # Wyświetlanie 5 fajki dla kratki
-                                    BOARD.draw_small_board(screen, counter, walls)
+                                    BOARD.draw_small_board(screen, counter, wall)
 
                                     point = True  # Pomocnicza zmienna
-
-                                # Jeżeli licznik wynosi 4 i wybrane pole to skarb
-                                elif counter == 4 and selected_square == self.treasure:
-                                    counter += 1  # Zwiększa licznik
 
                                 # Jeżeli wybrane pole to skarb
                                 if selected_square == self.treasure:
@@ -197,9 +193,7 @@ class Second_Stage:
                                     loc1, loc2 = self.treasure
                                     screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
-                                    if counter == 5:
-                                        # Wyświetlanie 5 fajki dla skarbu
-                                        BOARD.draw_small_board(screen, counter, walls)
+                                    BOARD.draw_small_board(screen, counter, wall)
 
                                     winner = True  # Ustawia wartość wygranej na prawdę
 
@@ -214,6 +208,8 @@ class Second_Stage:
                                     screen.blit(image_wall, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     wall = True  # Pomocnicza zmienna
+                                    BOARD.draw_small_board(screen, counter, wall)
+
                 # Powrót do głównego menu
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
                     from Main import Labirynt

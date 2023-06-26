@@ -76,6 +76,17 @@ class First_Stage:
             step4_text = self.get_font(60).render(txt + ', spróbuj ponownie!', True, 'Red')
             step4_rect = step1_text.get_rect(center=(900, 230))
 
+            """
+            if txt == 'Gracz 2':
+                stepN_text = self.get_font(70).render(txt + ' przejdz do rysowania Labiryntu!', True, 'Red')
+                stepN_rect = stepN_text.get_rect(center=(1050, 300))
+            else:
+                stepN_next = self.get_font(70).render(txt + ' rozpocznij gre!', True, 'Red')
+                stepN_rect = stepN_text.get_rect(center=(1050, 300))
+
+            screen.blit(stepN_text, stepN_rect)
+            """
+
             # Tworzenie i aktualizowanie przycisku powrotu do menu
             img = pygame.image.load('empty_button.png')
 
@@ -84,7 +95,12 @@ class First_Stage:
                                  new_color='White')
             button_back.ChangeColor(play_mouse_pos)
             button_back.update(screen)
-            #
+
+            # Tworzenie przycisku przejścia do następnego Gracza / 2 Etapu gry
+            button_player2 = button(image=img, pos=(1050, 480), text_input=ButtonText, font=self.get_font(65),
+                                    base_color='Black',
+                                    new_color='White')
+
             # Wyświetlanie odpowiednich kroków na ekranie w zależności od stanu gry
             if show_step1:
                 screen.blit(step1_text, step1_rect)
@@ -94,18 +110,11 @@ class First_Stage:
                 screen.blit(step3_text, ste3_rect)
             if show_step4:
                 screen.blit(step4_text, step4_rect)
+
+            # Wyświetlenie tekstu oraz przycisku przejścia do następnego Gracza / 2 Etapu gry
             if show_next_move:
-                # Tworzenie przycisku
-                button_player2 = button(image=img, pos=(1050, 480), text_input=ButtonText, font=self.get_font(65),
-                                        base_color='Black',
-                                        new_color='White')
                 button_player2.ChangeColor(play_mouse_pos)
                 button_player2.update(screen)
-
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):
-                        return
-
 
             # Rysowanie skarbu, labiryntu i krzyża na planszy w zależności od stanu gry
             if treasure_drawn:
@@ -214,16 +223,18 @@ class First_Stage:
                         # Jeśli krzyż nie został narysowany na brzegu, zresetuj grę
                         cross_drawn = False
                         must_restart = True
-                # Zamykanie gry
-                if event.type == pygame.QUIT:
-                    pygame.quit()  # Zamyka Pygame
-                    exit()  # Kończy działanie programu
                 # Powrót do głównego menu
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
                     from Main import Labirynt
                     game = Labirynt()
                     game.main_menu()
                 # Przejście do następnego Gracza / do 2 Etapu Gry
-
+                if show_next_move:
+                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):
+                        return
+                # Zamykanie gry
+                if event.type == pygame.QUIT:
+                    pygame.quit()  # Zamyka Pygame
+                    exit()  # Kończy działanie programu
 
             pygame.display.update()  # Aktualizuje wyświetlaną grafikę gry
