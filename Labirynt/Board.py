@@ -1,5 +1,5 @@
 import pygame  # Importowanie modułu pygame
-
+#
 
 # Klasa reprezentująca stan gry
 class GameState:

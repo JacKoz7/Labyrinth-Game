@@ -4,7 +4,7 @@ from Button import button  # Import Klasy button
 from instruction import inst  # Import funkcji
 from Stage1_Stage2 import First_Stage  # Import Klasy First_Stage
 from Stage3_Stage4 import Second_Stage, Game_status  # Import Klas Second_Stage oraz Game_status
-
+#
 
 # Definicja głównej klasy Labirynt
 class Labirynt:

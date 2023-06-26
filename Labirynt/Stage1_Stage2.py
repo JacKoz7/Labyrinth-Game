@@ -1,7 +1,7 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
 from Button import button  # Import Klasy button
-
+#
 
 # Klasa reprezentująca Pierwszą fazę gry
 class First_Stage:
@@ -193,7 +193,7 @@ class First_Stage:
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(
                         self.labyrinth) == 37 and not cross_drawn:
 
-                    # Sprawdzanie czy wybrany kwadrat jest na brzegu
+                    # Sprawdzanie, czy wybrany kwadrat jest na brzegu
                     if location[0] == 0 or location[0] == 9 or location[1] == 0 or location[1] == 9:
 
                         mouse_x, mouse_y = pygame.mouse.get_pos()

@@ -1,5 +1,5 @@
 # Funkcja służąca do wyświetlania instrukcji gry na ekran
-def inst(screen, get_font, h):
+def inst(screen, get_font, h):        #
     napis = """
     to jest 
     dlugi

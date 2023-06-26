@@ -1,4 +1,4 @@
-# Klasa przycisk
+# Klasa przycisk #
 class button:
     # Konstruktor z parametrami, przyjmujący argumenty
     def __init__(self, image, pos, text_input, font, base_color, new_color):
