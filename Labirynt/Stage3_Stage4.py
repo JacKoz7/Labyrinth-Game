@@ -104,11 +104,11 @@ class Second_Stage:
                 pygame.time.delay(800)
                 return
 
-            if winner:  # Jeżeli jest zwycięzca
+            if pause is True:  # Zatrzymanie gry, aby zobaczyć znaleziony skarb
+                pygame.time.delay(2000)
+                pause = False
 
-                if pause is False:  # Zatrzymanie gry, aby zobaczyć znaleziony skarb
-                    pygame.time.delay(2000)
-                    pause = True
+            if winner:  # Jeżeli jest zwycięzca
 
                 screen.fill('black')  # Wypełnienie ekranu kolorem czarnym
                 bg = pygame.image.load("game_background.png")
@@ -196,6 +196,7 @@ class Second_Stage:
                                     BOARD.draw_small_board(screen, counter, wall)
 
                                     winner = True  # Ustawia wartość wygranej na prawdę
+                                    pause = True
 
                             else:  # Jeżeli wybrane pole sąsiaduje z poprawnym, ale nie jest w labiryncie
 
