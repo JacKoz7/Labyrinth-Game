@@ -1,7 +1,7 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
-from Button import button  # Import Klasy button
-#
+from Button import Button  # Import Klasy button
+
 
 # Klasa reprezentująca Pierwszą fazę gry
 class First_Stage:
@@ -25,44 +25,44 @@ class First_Stage:
             return None
 
     # Metoda odpowiedzialna za rozgrywkę
-    def play(self, screen, txt, ButtonText):
-
+    def play(self, screen, txt, button_text):
 
         # Logika gry
-        treasure_drawn = False  # Czy skarb został narysowany
-        labyrinth_drawn = False  # Czy labirynt został narysowany
-        cross_drawn = False  # Czy krzyż został narysowany
+        treasure_drawn = False
+        labyrinth_drawn = False
+        cross_drawn = False 
 
-        show_step1 = True  # Czy pokazać krok 1
-        show_step2 = False  # Czy pokazać krok 2
-        show_step3 = False  # Czy pokazać krok 3
-        show_step4 = False  # Czy pokazać krok 4
+        show_step1 = True
+        show_step2 = False
+        show_step3 = False
+        show_step4 = False
 
         show_next_move = False  # Czy pokazać następny ruch (Kiedy labirynt już jest narysowany)
 
-        selected_treasure = None  # Wybrany skarb
-        selected_cross = None  # Wybrany krzyż
+        selected_treasure = None
+        selected_cross = None
 
-        must_restart = False  # Czy należy zrestartować
+        must_restart = False
 
-        BOARD = GameState()  # Tworzenie instancji klasy GameState
+        board = GameState()  # Tworzenie instancji klasy GameState
 
         # Ładowanie obrazów
         image_treasure = pygame.image.load('red_circle1.png')
         image_labyrinth = pygame.image.load('red_point1.png')
         image_cross = pygame.image.load('red_krzyzyk1.png')
-        img = pygame.image.load('empty_button.png')
+
+        img_button = pygame.image.load('empty_button.png')
 
         while True:
 
-            play_mouse_pos = pygame.mouse.get_pos()
+            player_mouse_pos = pygame.mouse.get_pos()
 
-            location = BOARD.draw_board(screen)
+            location = board.draw_board(screen)
 
             # Rysowanie i wyświetlanie na ekranie poszczególnych kroków gry
-            gracz1_text = self.get_font(180).render(txt, True, 'Red')
-            gracz1_rect = gracz1_text.get_rect(center=(1050, 100))
-            screen.blit(gracz1_text, gracz1_rect)
+            player_text = self.get_font(180).render(txt, True, 'Red')
+            player_rect = player_text.get_rect(center=(1050, 100))
+            screen.blit(player_text, player_rect)
 
             step1_text = self.get_font(50).render('1. Zaznacz skarb', True, 'Red')
             step1_rect = step1_text.get_rect(center=(1050, 300))
@@ -76,28 +76,17 @@ class First_Stage:
             step4_text = self.get_font(60).render(txt + ', spróbuj ponownie!', True, 'Red')
             step4_rect = step1_text.get_rect(center=(900, 230))
 
-            """
-            if txt == 'Gracz 2':
-                stepN_text = self.get_font(70).render(txt + ' przejdz do rysowania Labiryntu!', True, 'Red')
-                stepN_rect = stepN_text.get_rect(center=(1050, 300))
-            else:
-                stepN_next = self.get_font(70).render(txt + ' rozpocznij gre!', True, 'Red')
-                stepN_rect = stepN_text.get_rect(center=(1050, 300))
-
-            screen.blit(stepN_text, stepN_rect)
-            """
-
             # Tworzenie i aktualizowanie przycisku powrotu do menu
-            img = pygame.image.load('empty_button.png')
+            img_button = pygame.image.load('empty_button.png')
 
-            button_back = button(image=img, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
+            menu_button = Button(image=img_button, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                                  base_color='Black',
                                  new_color='White')
-            button_back.ChangeColor(play_mouse_pos)
-            button_back.update(screen)
+            menu_button.ChangeColor(player_mouse_pos)
+            menu_button.Update(screen)
 
             # Tworzenie przycisku przejścia do następnego Gracza / 2 Etapu gry
-            button_player2 = button(image=img, pos=(1050, 480), text_input=ButtonText, font=self.get_font(65),
+            button_player2 = Button(image=img_button, pos=(1050, 480), text_input=button_text, font=self.get_font(65),
                                     base_color='Black',
                                     new_color='White')
 
@@ -111,10 +100,10 @@ class First_Stage:
             if show_step4:
                 screen.blit(step4_text, step4_rect)
 
-            # Wyświetlenie tekstu oraz przycisku przejścia do następnego Gracza / 2 Etapu gry
+            # Wyświetlenie przycisku przejścia do następnego Gracza / 2 Etapu gry
             if show_next_move:
-                button_player2.ChangeColor(play_mouse_pos)
-                button_player2.update(screen)
+                button_player2.ChangeColor(player_mouse_pos)
+                button_player2.Update(screen)
 
             # Rysowanie skarbu, labiryntu i krzyża na planszy w zależności od stanu gry
             if treasure_drawn:
@@ -143,8 +132,8 @@ class First_Stage:
                     labyrinth_drawn = False
 
                     show_step1 = True
-                    show_step3 = False
                     show_step2 = False
+                    show_step3 = False
                     show_step4 = True
 
                     selected_treasure = None
@@ -167,7 +156,7 @@ class First_Stage:
                         show_step1 = False
                         show_step2 = True
 
-                        # Dodanie skarbu do labiryntu dla pożniejszej mechaniki gry
+                        # Dodanie skarbu do labiryntu
                         self.labyrinth.append(selected_treasure)
 
                 # Rysowanie labiryntu
@@ -198,7 +187,7 @@ class First_Stage:
                             show_step2 = False
                             show_step3 = True
 
-                # Rysowanie krzyzyka
+                # Rysowanie krzyżyka
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(
                         self.labyrinth) == 37 and not cross_drawn:
 
@@ -211,6 +200,7 @@ class First_Stage:
                         # Jeżeli wybrany krzyż nie jest pusty,
                         # zakończenie procesu rysowania i zapisanie pozycji skarbu oraz krzyża
                         if selected_cross is not None:
+
                             cross_drawn = True
                             show_step3 = False
                             show_step4 = False
@@ -223,14 +213,15 @@ class First_Stage:
                         # Jeśli krzyż nie został narysowany na brzegu, zresetuj grę
                         cross_drawn = False
                         must_restart = True
+
                 # Powrót do głównego menu
-                if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
+                if event.type == pygame.MOUSEBUTTONDOWN and menu_button.CheckForInput(player_mouse_pos):
                     from Main import Labirynt
                     game = Labirynt()
                     game.main_menu()
                 # Przejście do następnego Gracza / do 2 Etapu Gry
                 if show_next_move:
-                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(play_mouse_pos):
+                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos):
                         return
                 # Zamykanie gry
                 if event.type == pygame.QUIT:

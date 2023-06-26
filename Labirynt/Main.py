@@ -1,10 +1,10 @@
 import pygame  # Importowanie modułu pygame
 from sys import exit  # Import metody exit
-from Button import button  # Import Klasy button
+from Button import Button  # Import Klasy button
 from instruction import inst  # Import funkcji
 from Stage1_Stage2 import First_Stage  # Import Klasy First_Stage
 from Stage3_Stage4 import Second_Stage, Game_status  # Import Klas Second_Stage oraz Game_status
-#
+
 
 # Definicja głównej klasy Labirynt
 class Labirynt:
@@ -13,7 +13,7 @@ class Labirynt:
         pygame.init()  # Inicjalizacja modułu pygame
         self.clock = pygame.time.Clock()  # Tworzenie obiektu zegara
         self.h = 700
-        self.SCREEN = pygame.display.set_mode((2 * self.h, self.h))  # Ustawianie trybu wyświetlania
+        self.screen = pygame.display.set_mode((2 * self.h, self.h))  # Ustawianie trybu wyświetlania
         pygame.display.set_caption('Labirynt')  # Ustawianie tytułu okna
         self.txt2 = 'Gracz 2'
         self.txt = 'Gracz 1'
@@ -39,7 +39,7 @@ class Labirynt:
         Player2_status = Game_status(walls=[], found_labyrinth=[], winner=False)
 
         # Wyłowanie metody pierwszego etapu gry dla Gracza 1
-        Player1_beginning.play(self.SCREEN, self.txt, 'Gracz 2 ')
+        Player1_beginning.play(self.screen, self.txt, 'Gracz 2 ')
 
         # Tworzenie obiektu 2 etapu gry dla Gracza 1 przy pomocy 'konstruktora z parametrami'
         Player1_ending = Second_Stage(Player1_beginning.treasure,
@@ -47,7 +47,7 @@ class Labirynt:
                                       Player1_beginning.cross)
 
         # Analogicznie dla Gracza 2
-        Player2_beginning.play(self.SCREEN, self.txt2, 'Kontynuuj ')
+        Player2_beginning.play(self.screen, self.txt2, 'Kontynuuj ')
         Player2_ending = Second_Stage(Player2_beginning.treasure,
                                       Player2_beginning.labyrinth,
                                       Player2_beginning.cross)
@@ -55,35 +55,35 @@ class Labirynt:
         # Pętla wykonująca się do momentu wygrania jednego z graczy (pole 'winner' jest ciągle aktualizowane)
         while Player1_status.winner is False and Player2_status.winner is False:
             if Player1_status.winner is False:
-                Player2_ending.endgame(self.SCREEN, self.txt, self.txt2, Player1_status.walls,
+                Player2_ending.endgame(self.screen, self.txt, self.txt2, Player1_status.walls,
                                        Player1_status.found_labyrinth, Player2_status.winner)
 
             if Player2_status.winner is False:
-                Player1_ending.endgame(self.SCREEN, self.txt2, self.txt, Player2_status.walls,
+                Player1_ending.endgame(self.screen, self.txt2, self.txt, Player2_status.walls,
                                        Player2_status.found_labyrinth, Player1_status.winner)
 
     # Metoda wyświetlająca instrukcje gry
     def instructions(self):
         while True:
             options_mouse_pos = pygame.mouse.get_pos()  # Pobranie pozycji myszy
-            self.SCREEN.fill('Black')  # Wypełnienie ekranu kolorem czarnym
+            self.screen.fill('Black')  # Wypełnienie ekranu kolorem czarnym
 
             # Stworzenie i wyświetlenie tytułu 'Instrukcja gry:'
             options_text = self.get_font(55).render('Instrukcja gry:', True, 'Red')
             options_rect = options_text.get_rect(center=(self.h, 100))
-            self.SCREEN.blit(options_text, options_rect)
+            self.screen.blit(options_text, options_rect)
 
-            inst(self.SCREEN, self.get_font(35),
+            inst(self.screen, self.get_font(35),
                  self.h)  # Wywołanie funkcji inst z pliku instructions, która wyświetla właściwe instrukcje
 
-            img = pygame.image.load('empty_button.png')  # Ładowanie obrazu dla przycisku.
+            img_button = pygame.image.load('empty_button.png')  # Ładowanie obrazu dla przycisku.
 
             # Stworzenie przycisku 'Menu'
-            button_back = button(image=img, pos=(180, 80), text_input='Menu', font=self.get_font(65),
+            menu_button = Button(image=img_button, pos=(180, 80), text_input='Menu', font=self.get_font(65),
                                  base_color='Black', new_color='White')
 
-            button_back.ChangeColor(options_mouse_pos)  # Zmiana koloru przycisku, jeśli mysz jest nad nim
-            button_back.update(self.SCREEN)  # Aktualizacja wyświetlanego przycisku na ekranie
+            menu_button.ChangeColor(options_mouse_pos)  # Zmiana koloru przycisku, jeśli mysz jest nad nim
+            menu_button.Update(self.screen)  # Aktualizacja wyświetlanego przycisku na ekranie
 
             for event in pygame.event.get():  # Obsługa zdarzeń
                 if event.type == pygame.QUIT:  # Jeżeli zamknięto okno gry
@@ -91,7 +91,7 @@ class Labirynt:
                     exit()  # Kończy działanie programu
 
                 if event.type == pygame.MOUSEBUTTONDOWN:  # Jeżeli kliknięto przycisk myszy
-                    if button_back.CheckForInput(options_mouse_pos):
+                    if menu_button.CheckForInput(options_mouse_pos):
                         self.main_menu()  # Przejście do menu głównego
 
             pygame.display.update()  # Aktualizacja wyświetlanego obrazu gry
@@ -101,26 +101,26 @@ class Labirynt:
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
             bg = pygame.image.load("game_background.png")
-            self.SCREEN.blit(bg, (0,0))
+            self.screen.blit(bg, (0, 0))
             menu_text = self.get_font(200).render('Labirynt', True, 'Red')
             menu_rect = menu_text.get_rect(center=(self.h, 100))
 
             img = pygame.image.load('empty_button.png')
 
-            play_button = button(image=img, pos=(self.h, 280), text_input='Graj', font=self.get_font(65),
+            play_button = Button(image=img, pos=(self.h, 280), text_input='Graj', font=self.get_font(65),
                                  base_color='Black', new_color='White')
 
-            options_button = button(image=img, pos=(self.h, 430), text_input='Instrukcja', font=self.get_font(65),
+            instruction_button = Button(image=img, pos=(self.h, 430), text_input='Instrukcja', font=self.get_font(65),
                                     base_color='Black', new_color='White')
 
-            quit_button = button(image=img, pos=(self.h, 580), text_input='Wyjscie', font=self.get_font(65),
+            quit_button = Button(image=img, pos=(self.h, 580), text_input='Wyjscie', font=self.get_font(65),
                                  base_color='Black', new_color='White')
 
-            self.SCREEN.blit(menu_text, menu_rect)
+            self.screen.blit(menu_text, menu_rect)
 
-            for buttons in [play_button, options_button, quit_button]:  # Iteracja przez listę przycisków.
+            for buttons in [play_button, instruction_button, quit_button]:  # Iteracja przez listę przycisków
                 buttons.ChangeColor(menu_mouse_pos)
-                buttons.update(self.SCREEN)
+                buttons.Update(self.screen)
 
             # Obsługa zdarzeń
             for event in pygame.event.get():
@@ -131,8 +131,9 @@ class Labirynt:
                     if play_button.CheckForInput(menu_mouse_pos):
                         self.game_process()
 
-                    if options_button.CheckForInput(menu_mouse_pos):
+                    if instruction_button.CheckForInput(menu_mouse_pos):
                         self.instructions()
+
                     if quit_button.CheckForInput(menu_mouse_pos):
                         pygame.quit()
                         exit()

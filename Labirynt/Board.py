@@ -1,5 +1,5 @@
 import pygame  # Importowanie modułu pygame
-#
+
 
 # Klasa reprezentująca stan gry
 class GameState:
@@ -8,20 +8,20 @@ class GameState:
         self.selected_point = None  # Początkowo żadne pole nie jest zaznaczone
         self.square_size = 60  # Rozmiar pola
         self.tick_image = pygame.image.load('green_tick.png')  # Obrazek zielonej fajki
-        self.x = pygame.image.load("Red_X.png")
+        self.x_image = pygame.image.load("Red_X.png")
 
     # Metoda zwracająca obiekt czcionki
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
 
     # Metoda rysująca planszę
-    def draw_board(self, SCREEN):
-        SCREEN.fill('Black')  # Wypełnienie ekranu kolorem czarnym
+    def draw_board(self, screen):
+        screen.fill('Black')  # Wypełnienie ekranu kolorem czarnym
 
         # Rysowanie planszy 10x10
         for row in range(10):
             for col in range(10):
-                pygame.draw.rect(SCREEN, 'Red', (
+                pygame.draw.rect(screen, 'Red', (
                     100 + col * self.square_size, 50 + row * self.square_size, self.square_size, self.square_size), 2)
 
         # Sprawdzenie, czy wybrano pole na planszy
@@ -31,7 +31,7 @@ class GameState:
             selected_row = (mouse_y - 50) // self.square_size  # Obliczenie wybranego wiersza
 
             # Zaznaczanie wybranego pola
-            pygame.draw.rect(SCREEN, 'Red', (
+            pygame.draw.rect(screen, 'Red', (
                 100 + selected_col * self.square_size, 50 + selected_row * self.square_size, self.square_size,
                 self.square_size), 5)
 
@@ -43,14 +43,14 @@ class GameState:
             return None
 
     # Metoda rysująca małą planszę służącą do zaznaczania fajek w 2 etapie gry
-    def draw_small_board(self, SCREEN, counter, wall):
+    def draw_small_board(self, screen, counter, wall):
         for x in range(5):  # Pętla przez 5 pól
-            pygame.draw.rect(SCREEN, 'Red',
+            pygame.draw.rect(screen, 'Red',
                              (900 + x * self.square_size, 330 + self.square_size, self.square_size, self.square_size),
                              7)
             if x < counter:  # Jeżeli jest mniej zaznaczonych pól niż licznik
-                SCREEN.blit(self.tick_image,
+                screen.blit(self.tick_image,
                             (900 + x * self.square_size, 330 + self.square_size))  # Rysowanie zielonej fajki
         if wall:
-            SCREEN.blit(self.x,
+            screen.blit(self.x_image,
                         (900 + counter * self.square_size, 330 + self.square_size))  # Rysowanie zielonej fajki

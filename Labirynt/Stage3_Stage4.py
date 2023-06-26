@@ -1,20 +1,20 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
-from Button import button  # Import Klasy button
+from Button import Button  # Import Klasy button
 
 
 # Klasa Game_status służy do przechowywania informacji obu Graczy
 class Game_status:
-    # Konstruktor z parametrami, przyjmujący argumenty
+    # Konstruktor inicjalizujący z parametrami
     def __init__(self, walls, found_labyrinth, winner):
-        self.walls = walls  # Napotkane śćiany oponenta
+        self.walls = walls  # Napotkane ściany oponenta
         self.found_labyrinth = found_labyrinth  # Znaleziony labirynt oponenta
         self.winner = winner  # Status wygranego Gracza
 
 
 # Klasa reprezentująca Drugą fazę gry
 class Second_Stage:
-    # Konstruktor z parametrami, przyjmujący argumenty
+    # Konstruktor inicjalizujący z parametrami
     def __init__(self, treasure, labyrinth, cross):
         self.treasure = treasure  # Pozycja skarbu
         self.labyrinth = labyrinth  # Lista zawierająca pozycje labiryntu na planszy
@@ -26,11 +26,11 @@ class Second_Stage:
         return pygame.font.Font('Ancient Medium.ttf', size)
 
     # Metoda 'get_neighbours' zwraca listę sąsiednich pól dla danej pozycji
-    def get_neighbours(self, position):
+    def get_neighbors(self, position):
         row, col = position
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        neighbours = [(row + dr, col + dc) for dr, dc in directions]
-        return neighbours
+        neighbors = [(row + dr, col + dc) for dr, dc in directions]
+        return neighbors
 
     # Metoda 'endgame' obsługuje logikę końca gry
     def endgame(self, screen, txt, txt2, walls, labyrinth_temp, winner):
@@ -43,52 +43,52 @@ class Second_Stage:
         pause = False
 
         # Inicjalizacja obiektu stanu planszy
-        BOARD = GameState()
+        board = GameState()
 
         # Ładowanie obrazów
         image_treasure = pygame.image.load('red_circle1.png')
-        image_krzyzyk = pygame.image.load('red_krzyzyk1.png')
+        image_cross = pygame.image.load('red_krzyzyk1.png')
         image_point = pygame.image.load('red_point1.png')
         image_wall = pygame.image.load('wall.png')
 
-        img = pygame.image.load('empty_button.png')
+        img_button = pygame.image.load('empty_button.png')
 
-        # Tworzenie przycisku #
-        button_back = button(image=img, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
+        # Tworzenie przycisku
+        button_back = Button(image=img_button, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                              base_color='Black',
                              new_color='White')
 
         # Główna pętla gry
         while True:
             play_mouse_pos = pygame.mouse.get_pos()
-            location = BOARD.draw_board(screen)
+            location = board.draw_board(screen)
 
-            BOARD.draw_small_board(screen, counter, wall)  # Szkicowanie zielonych green ticków
+            board.draw_small_board(screen, counter, wall)  # Szkicowanie zielonych green ticków
 
             # Rysowanie i wyświetlanie informacji tekstowych na ekranie
-            gracz1_text = self.get_font(180).render(txt, True, 'Red')
-            gracz1_rect = gracz1_text.get_rect(center=(1050, 100))
-            screen.blit(gracz1_text, gracz1_rect)
+            player_text = self.get_font(180).render(txt, True, 'Red')
+            player_rect = player_text.get_rect(center=(1050, 100))
+            screen.blit(player_text, player_rect)
 
-            way_text = self.get_font(50).render('Odnajdz droge do skarbu ' + txt2, True, 'Red')
-            way_rect = gracz1_text.get_rect(center=(1000, 300))
+            path_text = self.get_font(50).render(txt2 + ' odnajdz droge do skarbu!', True, 'Red')
+            path_rect = player_text.get_rect(center=(1000, 300))
 
             winner_text = self.get_font(70).render('Wygrywa ' + txt, True, 'Red')
             winner_rect = winner_text.get_rect(center=(700, 185))
 
             congrats = self.get_font(160).render('Gratulacje', True, 'Red')
-            congrat_rect = congrats.get_rect(center=(700, 80))
+            congrats_rect = congrats.get_rect(center=(700, 80))
 
             button_back.ChangeColor(play_mouse_pos)  # Aktualizowanie koloru przycisku "wróć"
-            button_back.update(screen)
+            button_back.Update(screen)
 
             if winner is False:
-                screen.blit(way_text, way_rect)  # Wyświetlanie tekstu, jeżeli nie ma zwycięzcy
+                screen.blit(path_text, path_rect)  # Wyświetlanie tekstu, jeżeli nie ma zwycięzcy
 
             # Rysowanie krzyżyka, ścian i skarbu na planszy w zależności od stanu gry
             if cross_drawn:
                 loc1, loc2 = self.cross
-                screen.blit(image_krzyzyk, (102 + loc2 * 60, 52 + loc1 * 60))
+                screen.blit(image_cross, (102 + loc2 * 60, 52 + loc1 * 60))
 
             for square in walls:
                 loc1, loc2 = square
@@ -99,7 +99,7 @@ class Second_Stage:
                 if square != self.cross and square != self.treasure:
                     screen.blit(image_point, (102 + loc2 * 60, 52 + loc1 * 60))
 
-            # Zatrzymanie gry, aby zobaczyć ostatnią ścianę oraz kratki labiryntu
+            # Zatrzymanie gry, aby zobaczyć ostatnią ścianę oraz kratkę labiryntu
             if point or wall:
                 pygame.time.delay(800)
                 return
@@ -113,24 +113,29 @@ class Second_Stage:
                 screen.fill('black')  # Wypełnienie ekranu kolorem czarnym
                 bg = pygame.image.load("game_background.png")
                 screen.blit(bg, (0, 0))
-                # bg2 = pygame.image.load("cool_red_bg.png")
-                # screen.blit(bg2, (0, 0))
+
                 screen.blit(winner_text, winner_rect)  # Wyświetlanie tekstu zwycięzcy
-                screen.blit(congrats, congrat_rect)
+                screen.blit(congrats, congrats_rect)
 
                 # Tworzenie przycisków menu i graj ponownie
-                winner_button_menu = button(image=img, pos=(700, 500), text_input="Menu", font=self.get_font(65),
+                winner_button_menu = Button(image=img_button, pos=(700, 500), text_input="Menu", font=self.get_font(65),
                                             base_color='Black',
                                             new_color='White')
-                play_again_button = button(image=img, pos=(700, 350), text_input="Od Nowa", font=self.get_font(65),
+                play_again_button = Button(image=img_button, pos=(700, 350), text_input="Od Nowa", font=self.get_font(65),
                                            base_color='Black', new_color='White')
 
                 # Aktualizowanie przycisków
                 winner_button_menu.ChangeColor(play_mouse_pos)
-                winner_button_menu.update(screen)
+                winner_button_menu.Update(screen)
 
                 play_again_button.ChangeColor(play_mouse_pos)
-                play_again_button.update(screen)
+                play_again_button.Update(screen)
+
+                # Wyświetlanie twórców
+                creators = "Twórcy: Jacek Kozlowski i Mykhailo Kapustianyk"
+                creators_text = self.get_font(30).render(creators, True, 'Red')
+                creators_rect = creators_text.get_rect(center=(700, 665))
+                screen.blit(creators_text, creators_rect)
 
                 for event in pygame.event.get():
                     # Jeżeli kliknięto przycisk wygrywający
@@ -147,6 +152,11 @@ class Second_Stage:
 
                         # Parametr auto_start = False odpowiada za rozpoczęcie Gry od nowa po utworzeniu obiektu
 
+                    # Zamykanie gry
+                    if event.type == pygame.QUIT:
+                        pygame.quit()  # Zamyka Pygame
+                        exit()  # Kończy działanie programu
+
             # Obsługa zdarzeń
             for event in pygame.event.get():
                 # W momencie kliknięcia myszą i krzyżyk jest już narysowany
@@ -159,10 +169,9 @@ class Second_Stage:
                         col = location[1]
 
                         selected_square = (row, col)  # Zapisuje wybrane pole
-                        # print(selected_square)  # Debug: wyświetla wybrane pole
 
                         # Jeżeli wybrane pole sąsiaduje z jakimkolwiek polem poprawnym i gra jeszcze się nie skończyła
-                        if any(selected_square in self.get_neighbours(correct_square) for correct_square in
+                        if any(selected_square in self.get_neighbors(correct_square) for correct_square in
                                self.correct_squares) and winner is False:
 
                             # Jeżeli wybrane pole jest częścią labiryntu
@@ -182,7 +191,7 @@ class Second_Stage:
                                     screen.blit(image_point, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     # Wyświetlanie 5 fajki dla kratki
-                                    BOARD.draw_small_board(screen, counter, wall)
+                                    board.draw_small_board(screen, counter, wall)
 
                                     point = True  # Pomocnicza zmienna
 
@@ -193,7 +202,7 @@ class Second_Stage:
                                     loc1, loc2 = self.treasure
                                     screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
-                                    BOARD.draw_small_board(screen, counter, wall)
+                                    board.draw_small_board(screen, counter, wall)
 
                                     winner = True  # Ustawia wartość wygranej na prawdę
                                     pause = True
@@ -209,7 +218,7 @@ class Second_Stage:
                                     screen.blit(image_wall, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     wall = True  # Pomocnicza zmienna
-                                    BOARD.draw_small_board(screen, counter, wall)
+                                    board.draw_small_board(screen, counter, wall)
 
                 # Powrót do głównego menu
                 if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
