@@ -30,7 +30,7 @@ class First_Stage:
         # Logika gry
         treasure_drawn = False
         labyrinth_drawn = False
-        cross_drawn = False 
+        cross_drawn = False
 
         show_step1 = True
         show_step2 = False
@@ -52,6 +52,7 @@ class First_Stage:
         image_cross = pygame.image.load('red_krzyzyk1.png')
 
         img_button = pygame.image.load('empty_button.png')
+        img_undo = pygame.image.load('empty_button.png')
 
         while True:
 
@@ -77,13 +78,16 @@ class First_Stage:
             step4_rect = step1_text.get_rect(center=(900, 230))
 
             # Tworzenie i aktualizowanie przycisku powrotu do menu
-            img_button = pygame.image.load('empty_button.png')
-
             menu_button = Button(image=img_button, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                                  base_color='Black',
                                  new_color='White')
             menu_button.ChangeColor(player_mouse_pos)
             menu_button.Update(screen)
+
+            # Tworzenie i aktualizowanie przycisku 'Undo'
+            undo_button = Button(image=img_undo, pos=(850, 480), text_input='Menu', font=self.get_font(65),
+                                 base_color='Black',
+                                 new_color='White')
 
             # Tworzenie przycisku przejścia do następnego Gracza / 2 Etapu gry
             button_player2 = Button(image=img_button, pos=(1050, 480), text_input=button_text, font=self.get_font(65),
@@ -115,6 +119,10 @@ class First_Stage:
                     if square != selected_cross and square != selected_treasure:
                         row, col = square
                         screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
+
+                if len(self.labyrinth) > 1:
+                    undo_button.ChangeColor(player_mouse_pos)
+                    undo_button.Update(screen)
 
             if cross_drawn:
                 row, col = selected_cross
@@ -158,6 +166,7 @@ class First_Stage:
 
                         # Dodanie skarbu do labiryntu
                         self.labyrinth.append(selected_treasure)
+                        self.treasure = selected_treasure
 
                 # Rysowanie labiryntu
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 37:
@@ -176,7 +185,8 @@ class First_Stage:
                                     selected_labyrinth == (last_square[0], last_square[1] + 1):
 
                                 # Aby powtórnie nie dodać wybranej kratki oraz skarbu do labiryntu
-                                if selected_labyrinth not in self.labyrinth and selected_labyrinth != self.labyrinth[0]:
+                                if selected_labyrinth not in self.labyrinth and selected_labyrinth != \
+                                        self.labyrinth[0]:
                                     self.labyrinth.append(selected_labyrinth)
                                     break  # przerwanie pętli, jeżeli znaleźliśmy pasujący kwadrat
 
@@ -223,6 +233,15 @@ class First_Stage:
                 if show_next_move:
                     if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos):
                         return
+                # Kliknięcie przycisku undo
+                if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) \
+                        and 1 < len(self.labyrinth) <= 36:
+                    self.labyrinth.pop(-1)
+
+                    if len(self.labyrinth) <= 36:
+                        show_step3 = False
+                        show_step2 = True
+
                 # Zamykanie gry
                 if event.type == pygame.QUIT:
                     pygame.quit()  # Zamyka Pygame
