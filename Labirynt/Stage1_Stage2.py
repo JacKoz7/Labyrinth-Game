@@ -52,7 +52,9 @@ class First_Stage:
         image_cross = pygame.image.load('red_krzyzyk1.png')
 
         img_button = pygame.image.load('empty_button.png')
-        img_undo = pygame.image.load('empty_button.png')
+
+        img_undo = pygame.image.load('return_button.png')
+        img_return = pygame.image.load('return.png')
 
         while True:
 
@@ -85,9 +87,13 @@ class First_Stage:
             menu_button.Update(screen)
 
             # Tworzenie i aktualizowanie przycisku 'Undo'
-            undo_button = Button(image=img_undo, pos=(850, 480), text_input='Menu', font=self.get_font(65),
+            undo_button = Button(image=img_undo, pos=(830, 600), text_input='', font=self.get_font(65),
                                  base_color='Black',
                                  new_color='White')
+
+            return_button = Button(image=img_return, pos=(830, 600), text_input='', font=self.get_font(65),
+                                   base_color='Black',
+                                   new_color='White')
 
             # Tworzenie przycisku przejścia do następnego Gracza / 2 Etapu gry
             button_player2 = Button(image=img_button, pos=(1050, 480), text_input=button_text, font=self.get_font(65),
@@ -120,9 +126,11 @@ class First_Stage:
                         row, col = square
                         screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
 
-                if len(self.labyrinth) > 1:
-                    undo_button.ChangeColor(player_mouse_pos)
+                if 1 < len(self.labyrinth) <= 36:
+                    return_button.ChangeColorImage(player_mouse_pos)
+
                     undo_button.Update(screen)
+                    return_button.Update(screen)
 
             if cross_drawn:
                 row, col = selected_cross
@@ -210,7 +218,6 @@ class First_Stage:
                         # Jeżeli wybrany krzyż nie jest pusty,
                         # zakończenie procesu rysowania i zapisanie pozycji skarbu oraz krzyża
                         if selected_cross is not None:
-
                             cross_drawn = True
                             show_step3 = False
                             show_step4 = False
@@ -234,8 +241,8 @@ class First_Stage:
                     if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos):
                         return
                 # Kliknięcie przycisku undo
-                if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) \
-                        and 1 < len(self.labyrinth) <= 36:
+                if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
+                        return_button.CheckForInput(player_mouse_pos) and 1 < len(self.labyrinth) <= 36:
                     self.labyrinth.pop(-1)
 
                     if len(self.labyrinth) <= 36:
