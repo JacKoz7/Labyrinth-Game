@@ -1,6 +1,6 @@
 import pygame  # Importowanie modułu pygame
 
-
+#
 # Klasa przycisk #
 class Button:
     # Konstruktor z parametrami, przyjmujący argumenty

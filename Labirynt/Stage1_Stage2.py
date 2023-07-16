@@ -1,4 +1,4 @@
-import pygame  # Importowanie modułu pygame
+import pygame  # Importowanie modułu pygame #
 from Board import GameState  # Import Klasy GameState
 from Button import Button  # Import Klasy button
 
