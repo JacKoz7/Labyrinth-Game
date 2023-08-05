@@ -1,3 +1,6 @@
+import pygame  # Importowanie modułu pygame
+
+#
 # Klasa przycisk #
 class Button:
     # Konstruktor z parametrami, przyjmujący argumenty
@@ -38,3 +41,23 @@ class Button:
             self.text = self.font.render(self.text_input, True, self.new_color)
         else:
             self.text = self.font.render(self.text_input, True, self.base_color)
+
+    def ChangeColorImage(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) \
+                and position[1] in range(self.rect.top, self.rect.bottom):
+            new_image = self.image.copy()  # Tworzenie kopii obrazka
+
+            for x in range(new_image.get_width()):
+                for y in range(new_image.get_height()):
+                    pixel_color = new_image.get_at((x, y))
+                    if pixel_color.a > 0:  # Sprawdzenie przezroczystości piksela
+                        new_color = pygame.Color('white')  # Nowy kolor dla piksela
+                        new_color.a = pixel_color.a  # Zachowanie oryginalnej wartości przezroczystości
+                        new_image.set_at((x, y), new_color)  # Ustawienie nowego koloru piksela
+
+            self.image = new_image
+        else:
+            self.image = self.image.copy()
+
+
+
