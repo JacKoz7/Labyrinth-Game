@@ -7,8 +7,8 @@ class GameState:
     def __init__(self):
         self.selected_point = None  # Początkowo żadne pole nie jest zaznaczone
         self.square_size = 60  # Rozmiar pola
-        self.tick_image = pygame.image.load('green_tick.png')  # Obrazek zielonej fajki
-        self.x_image = pygame.image.load("Red_X.png")
+        self.tick_image = pygame.image.load('Images/green_tick.png')  # Obrazek zielonej fajki
+        self.x_image = pygame.image.load("Images/Red_X.png")
 
     # Metoda zwracająca obiekt czcionki
     def get_font(self, size):

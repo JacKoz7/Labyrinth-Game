@@ -1,6 +1,7 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
 from Button import Button  # Import Klasy button
+from Randomize import RandomizeButton
 
 
 # Klasa reprezentująca Pierwszą fazę gry
@@ -47,11 +48,11 @@ class First_Stage:
         board = GameState()  # Tworzenie instancji klasy GameState
 
         # Ładowanie obrazów
-        image_treasure = pygame.image.load('red_circle1.png')
-        image_labyrinth = pygame.image.load('red_point1.png')
-        image_cross = pygame.image.load('red_krzyzyk1.png')
+        image_treasure = pygame.image.load('Images/red_circle1.png')
+        image_labyrinth = pygame.image.load('Images/red_point1.png')
+        image_cross = pygame.image.load('Images/red_krzyzyk1.png')
 
-        img_button = pygame.image.load('empty_button.png')
+        img_button = pygame.image.load('Images/empty_button.png')
 
         while True:
 
@@ -77,13 +78,18 @@ class First_Stage:
             step4_rect = step1_text.get_rect(center=(900, 230))
 
             # Tworzenie i aktualizowanie przycisku powrotu do menu
-            img_button = pygame.image.load('empty_button.png')
+            img_button = pygame.image.load('Images/empty_button.png')
+            randomizer_button_image = pygame.image.load(('Images/Randomizer_button.png'))
 
             menu_button = Button(image=img_button, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
                                  base_color='Black',
                                  new_color='White')
             menu_button.ChangeColor(player_mouse_pos)
             menu_button.Update(screen)
+
+            randomize_button = RandomizeButton(image=randomizer_button_image, pos=(800,600))
+            randomize_button.ChangeColor(player_mouse_pos)
+            randomize_button.Update(screen)
 
             # Tworzenie przycisku przejścia do następnego Gracza / 2 Etapu gry
             button_player2 = Button(image=img_button, pos=(1050, 480), text_input=button_text, font=self.get_font(65),

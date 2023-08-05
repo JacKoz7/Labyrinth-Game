@@ -46,12 +46,12 @@ class Second_Stage:
         board = GameState()
 
         # Ładowanie obrazów
-        image_treasure = pygame.image.load('red_circle1.png')
-        image_cross = pygame.image.load('red_krzyzyk1.png')
-        image_point = pygame.image.load('red_point1.png')
-        image_wall = pygame.image.load('wall.png')
+        image_treasure = pygame.image.load('Images/red_circle1.png')
+        image_cross = pygame.image.load('Images/red_krzyzyk1.png')
+        image_point = pygame.image.load('Images/red_point1.png')
+        image_wall = pygame.image.load('Images/wall.png')
 
-        img_button = pygame.image.load('empty_button.png')
+        img_button = pygame.image.load('Images/empty_button.png')
 
         # Tworzenie przycisku
         button_back = Button(image=img_button, pos=(1050, 600), text_input='Menu', font=self.get_font(65),
@@ -111,7 +111,7 @@ class Second_Stage:
             if winner:  # Jeżeli jest zwycięzca
 
                 screen.fill('black')  # Wypełnienie ekranu kolorem czarnym
-                bg = pygame.image.load("game_background.png")
+                bg = pygame.image.load("Images/game_background.png")
                 screen.blit(bg, (0, 0))
 
                 screen.blit(winner_text, winner_rect)  # Wyświetlanie tekstu zwycięzcy

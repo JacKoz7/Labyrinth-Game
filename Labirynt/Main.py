@@ -17,7 +17,7 @@ class Labirynt:
         pygame.display.set_caption('Labirynt')  # Ustawianie tytułu okna
         self.txt2 = 'Gracz 2'
         self.txt = 'Gracz 1'
-        self.icon = pygame.image.load("game_icon.png")
+        self.icon = pygame.image.load("Images/game_icon.png")
         pygame.display.set_icon(self.icon)
 
         if auto_start:
@@ -76,7 +76,7 @@ class Labirynt:
             inst(self.screen, self.get_font(35),
                  self.h)  # Wywołanie funkcji inst z pliku instructions, która wyświetla właściwe instrukcje
 
-            img_button = pygame.image.load('empty_button.png')  # Ładowanie obrazu dla przycisku.
+            img_button = pygame.image.load('Images/empty_button.png')  # Ładowanie obrazu dla przycisku.
 
             # Stworzenie przycisku 'Menu'
             menu_button = Button(image=img_button, pos=(180, 80), text_input='Menu', font=self.get_font(65),
@@ -100,12 +100,12 @@ class Labirynt:
     def main_menu(self):
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
-            bg = pygame.image.load("game_background.png")
+            bg = pygame.image.load("Images/game_background.png")
             self.screen.blit(bg, (0, 0))
             menu_text = self.get_font(200).render('Labirynt', True, 'Red')
             menu_rect = menu_text.get_rect(center=(self.h, 100))
 
-            img = pygame.image.load('empty_button.png')
+            img = pygame.image.load('Images/empty_button.png')
 
             play_button = Button(image=img, pos=(self.h, 280), text_input='Graj', font=self.get_font(65),
                                  base_color='Black', new_color='White')
