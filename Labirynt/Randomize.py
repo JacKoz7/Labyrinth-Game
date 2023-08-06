@@ -1,5 +1,4 @@
-import pygame
-
+import random
 
 class RandomizeButton:
     def __init__(self, image, pos):
@@ -8,6 +7,7 @@ class RandomizeButton:
         self.x_pos = pos[0]
         self.y_pos = pos[1]
         self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))  # Rect obrazka (dla detekcji kolizji)
+
 
     def Update(self, screen):
         if self.image is not None:
@@ -35,3 +35,29 @@ class RandomizeButton:
 
             # Nałóż obrazek z kółkiem na obrazek główny, uwzględniając maskę alfa
             self.image.blit(alpha_mask, (0, 0))
+
+def place_treasure():
+    treasure = (random.randint(0, 9), random.randint(0, 9))
+    return treasure
+
+def place_cross(treasure):
+    cross = random.choice([(0, i) for i in range(10)] + [(9, i) for i in range(10)] + [(i, 0) for i in range(1, 9)] +
+                          [(i, 9) for i in range(1, 9)])
+    while cross == treasure:
+        cross = random.choice(
+            [(0, i) for i in range(10)] + [(9, i) for i in range(10)] + [(i, 0) for i in range(1, 9)] +
+            [(i, 9) for i in range(1, 9)])
+    return cross
+
+
+def place_labyrinth_elements():
+    labyrinth_elements = []
+    while len(labyrinth_elements) < 36:
+        position = (random.randint(0, 9), random.randint(0, 9))
+        if position not in labyrinth_elements and position != place_treasure and position != place_cross:
+            labyrinth_elements.append(position)
+    return labyrinth_elements
+
+
+
+

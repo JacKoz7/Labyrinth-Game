@@ -1,7 +1,7 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
 from Button import Button  # Import Klasy button
-from Randomize import RandomizeButton
+from Randomize import RandomizeButton, place_treasure, place_cross, place_labyrinth_elements
 
 
 # Klasa reprezentująca Pierwszą fazę gry
@@ -52,8 +52,6 @@ class First_Stage:
         image_labyrinth = pygame.image.load('Images/red_point1.png')
         image_cross = pygame.image.load('Images/red_krzyzyk1.png')
 
-        img_button = pygame.image.load('Images/empty_button.png')
-
         while True:
 
             player_mouse_pos = pygame.mouse.get_pos()
@@ -87,7 +85,7 @@ class First_Stage:
             menu_button.ChangeColor(player_mouse_pos)
             menu_button.Update(screen)
 
-            randomize_button = RandomizeButton(image=randomizer_button_image, pos=(800,600))
+            randomize_button = RandomizeButton(image=randomizer_button_image, pos=(810,600))
             randomize_button.ChangeColor(player_mouse_pos)
             randomize_button.Update(screen)
 
@@ -164,6 +162,7 @@ class First_Stage:
 
                         # Dodanie skarbu do labiryntu
                         self.labyrinth.append(selected_treasure)
+                    # print(selected_treasure)
 
                 # Rysowanie labiryntu
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 37:
@@ -225,6 +224,16 @@ class First_Stage:
                     from Main import Labirynt
                     game = Labirynt()
                     game.main_menu()
+
+                if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
+                    print("works")
+                    print(place_treasure())
+                    print(place_cross(place_treasure()))
+                    print(place_labyrinth_elements())
+                    # self.treasure = place_treasure()
+                    # self.labyrinth = place_labyrinth_elements()
+                    # self.cross = place_cross(place_treasure())
+
                 # Przejście do następnego Gracza / do 2 Etapu Gry
                 if show_next_move:
                     if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos):

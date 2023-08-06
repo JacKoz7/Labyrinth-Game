@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9af2fec5-0b25-46b2-b724-c501ec56c530" name="Changes" comment="Added Randomize Button (not working yet)" />
+    <list default="true" id="9af2fec5-0b25-46b2-b724-c501ec56c530" name="Changes" comment="Added Randomize Button (not working yet)">
+      <change beforePath="$PROJECT_DIR$/.idea/LabiryntGame1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LabiryntGame1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Labirynt/Randomize.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Randomize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Labirynt/return.png" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Images/return.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Labirynt/return_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Images/return_button.png" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,7 +17,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -19,13 +26,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/jacus/OneDrive/Pulpit/LabiryntGame1/Labirynt/Images"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/jacus/OneDrive/Pulpit/LabiryntGame1/Labirynt/Images&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jacus\OneDrive\Pulpit\LabiryntGame1\Labirynt\Images" />
@@ -50,7 +57,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691245493983</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added Randomize Button (not working yet)">
+      <created>1691245580206</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1691245580206</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
