@@ -52,6 +52,9 @@ class First_Stage:
         image_labyrinth = pygame.image.load('Images/red_point1.png')
         image_cross = pygame.image.load('Images/red_krzyzyk1.png')
 
+        img_undo = pygame.image.load('Images/return_button.png')
+        img_return = pygame.image.load('Images/return.png')
+
         while True:
 
             player_mouse_pos = pygame.mouse.get_pos()
@@ -85,6 +88,16 @@ class First_Stage:
             menu_button.ChangeColor(player_mouse_pos)
             menu_button.Update(screen)
 
+            # Prycisk Undo
+            undo_button = Button(image=img_undo, pos=(1290, 600), text_input='', font=self.get_font(65),
+                                 base_color='Black',
+                                 new_color='White')
+
+            return_button = Button(image=img_return, pos=(1290, 600), text_input='', font=self.get_font(65),
+                                   base_color='Black',
+                                   new_color='White')
+
+            # Przycisk Randomize
             randomize_button = RandomizeButton(image=randomizer_button_image, pos=(810,600))
             randomize_button.ChangeColor(player_mouse_pos)
             randomize_button.Update(screen)
@@ -119,6 +132,12 @@ class First_Stage:
                     if square != selected_cross and square != selected_treasure:
                         row, col = square
                         screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
+
+                if 1 < len(self.labyrinth) <= 36:
+                    return_button.ChangeColorImage(player_mouse_pos)
+
+                    undo_button.Update(screen)
+                    return_button.Update(screen)
 
             if cross_drawn:
                 row, col = selected_cross
@@ -225,6 +244,17 @@ class First_Stage:
                     game = Labirynt()
                     game.main_menu()
 
+                # Przycisk Undo
+                if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
+                        return_button.CheckForInput(player_mouse_pos) and 1 < len(self.labyrinth) <= 36:
+
+                    self.labyrinth.pop(-1)
+
+                    if len(self.labyrinth) <= 36:
+                        show_step3 = False
+                        show_step2 = True
+
+                # Przycisk Randomize
                 if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
                     print("works")
                     print(place_treasure())
@@ -238,6 +268,7 @@ class First_Stage:
                 if show_next_move:
                     if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos):
                         return
+
                 # Zamykanie gry
                 if event.type == pygame.QUIT:
                     pygame.quit()  # Zamyka Pygame
