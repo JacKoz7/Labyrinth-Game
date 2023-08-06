@@ -1,7 +1,7 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
 from Button import Button  # Import Klasy button
-from Randomize import RandomizeButton, place_treasure, place_cross, place_labyrinth_elements
+from Randomize import RandomizeButton, place_treasure, place_cross, generate_maze
 
 
 # Klasa reprezentująca Pierwszą fazę gry
@@ -11,6 +11,9 @@ class First_Stage:
         self.treasure = (0, 0)  # Pozycja skarbu
         self.labyrinth = []  # Lista przechowująca elementy labiryntu
         self.cross = (0, 0)  # Pozycja krzyża
+        self.maze = generate_maze()
+        self.rtreasure = place_treasure()
+        self.rcross = place_cross(self.rtreasure)
 
     # Metoda zwracająca czcionkę o określonym rozmiarze
     def get_font(self, size):
@@ -31,7 +34,10 @@ class First_Stage:
         # Logika gry
         treasure_drawn = False
         labyrinth_drawn = False
-        cross_drawn = False 
+        cross_drawn = False
+        random_treasure_drawn = False
+        random_cross_drawn = False
+        random_labyrinth_drawn = False
 
         show_step1 = True
         show_step2 = False
@@ -133,15 +139,30 @@ class First_Stage:
                         row, col = square
                         screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
 
-                if 1 < len(self.labyrinth) <= 36:
-                    return_button.ChangeColorImage(player_mouse_pos)
+                        if 1 < len(self.labyrinth) <= 36:
+                            return_button.ChangeColorImage(player_mouse_pos)
 
-                    undo_button.Update(screen)
-                    return_button.Update(screen)
+                            undo_button.Update(screen)
+                            return_button.Update(screen)
+
+            if random_labyrinth_drawn:
+                for square in self.maze:
+                    if square != place_cross(place_treasure()) and square != place_treasure():
+                        row, col = square
+                        screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
+
 
             if cross_drawn:
                 row, col = selected_cross
                 screen.blit(image_cross, (102 + col * 60, 52 + row * 60))
+
+            if random_cross_drawn:
+                row, col = self.rcross
+                screen.blit(image_cross, (102 + col * 60, 52 + row * 60))
+
+            if random_treasure_drawn:
+                row, col = self.rtreasure
+                screen.blit(image_treasure, (102 + col * 60, 52 + row * 60))
 
             # Obsługa zdarzeń
             for event in pygame.event.get():
@@ -256,13 +277,14 @@ class First_Stage:
 
                 # Przycisk Randomize
                 if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
-                    print("works")
-                    print(place_treasure())
-                    print(place_cross(place_treasure()))
-                    print(place_labyrinth_elements())
-                    # self.treasure = place_treasure()
-                    # self.labyrinth = place_labyrinth_elements()
-                    # self.cross = place_cross(place_treasure())
+
+                    labyrinth_drawn = False
+                    treasure_drawn = False
+                    cross_drawn = False
+                    random_treasure_drawn = True
+                    random_cross_drawn = True
+                    random_labyrinth_drawn = True
+                    show_next_move = True
 
                 # Przejście do następnego Gracza / do 2 Etapu Gry
                 if show_next_move:

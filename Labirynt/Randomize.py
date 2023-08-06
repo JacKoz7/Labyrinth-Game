@@ -1,5 +1,4 @@
 import random
-
 class RandomizeButton:
     def __init__(self, image, pos):
         self.image = image
@@ -49,15 +48,45 @@ def place_cross(treasure):
             [(i, 9) for i in range(1, 9)])
     return cross
 
+def generate_maze():
+    def is_valid(x, y, maze, treasure, cross):
+        return 0 <= x < 10 and 0 <= y < 10 and (x, y) not in maze and (x, y) != treasure and (x, y) != cross
 
-def place_labyrinth_elements():
-    labyrinth_elements = []
-    while len(labyrinth_elements) < 36:
-        position = (random.randint(0, 9), random.randint(0, 9))
-        if position not in labyrinth_elements and position != place_treasure and position != place_cross:
-            labyrinth_elements.append(position)
-    return labyrinth_elements
+    def get_valid_neighbors(x, y, maze, treasure, cross):
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        neighbors = []
 
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if is_valid(nx, ny, maze, treasure, cross):
+                neighbors.append((nx, ny))
 
+        return neighbors
 
+    treasure = place_treasure()
+    cross = place_cross(treasure)
+
+    maze = [treasure]
+    visited = set(maze)
+
+    while True:
+        neighbors = get_valid_neighbors(*maze[-1], visited, treasure, cross)
+
+        if not neighbors:
+            break
+
+        neighbor = random.choice(neighbors)
+        maze.append(neighbor)
+        visited.add(neighbor)
+
+        if neighbor == cross:
+            break
+
+    while len(maze) < 35:
+        x, y = random.randint(0, 9), random.randint(0, 9)
+        if (x, y) != treasure and (x, y) != cross and (x, y) not in visited:
+            maze.append((x, y))
+            visited.add((x, y))
+
+    return maze
 
