@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9af2fec5-0b25-46b2-b724-c501ec56c530" name="Changes" comment="Added Randomize Button (not working yet)">
-      <change beforePath="$PROJECT_DIR$/.idea/LabiryntGame1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LabiryntGame1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9af2fec5-0b25-46b2-b724-c501ec56c530" name="Changes" comment="drobne zmiany">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Labirynt/Images/return.png" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Images/return.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Labirynt/Randomize.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Randomize.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" afterDir="false" />
     </list>
@@ -13,6 +10,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +67,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691245580206</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="drobne zmiany">
+      <created>1691340314598</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1691340314598</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -79,6 +90,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Randomize Button (not working yet)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Randomize Button (not working yet)" />
+    <MESSAGE value="drobne zmiany" />
+    <option name="LAST_COMMIT_MESSAGE" value="drobne zmiany" />
   </component>
 </project>

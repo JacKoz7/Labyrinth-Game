@@ -11,9 +11,10 @@ class First_Stage:
         self.treasure = (0, 0)  # Pozycja skarbu
         self.labyrinth = []  # Lista przechowująca elementy labiryntu
         self.cross = (0, 0)  # Pozycja krzyża
-        self.maze = generate_maze()
         self.rtreasure = place_treasure()
         self.rcross = place_cross(self.rtreasure)
+        self.maze = generate_maze(self.rtreasure, self.rcross)
+
 
     # Metoda zwracająca czcionkę o określonym rozmiarze
     def get_font(self, size):
@@ -43,6 +44,7 @@ class First_Stage:
         show_step2 = False
         show_step3 = False
         show_step4 = False
+        random_mode = False
 
         show_next_move = False  # Czy pokazać następny ruch (Kiedy labirynt już jest narysowany)
 
@@ -185,6 +187,18 @@ class First_Stage:
 
                     must_restart = False
 
+                if random_mode:           #randomize
+                    self.treasure = []
+                    self.labyrinth = []
+                    self.cross = []
+                    labyrinth_drawn = False
+                    treasure_drawn = False
+                    cross_drawn = False
+                    random_treasure_drawn = True
+                    random_cross_drawn = True
+                    random_labyrinth_drawn = True
+                    show_next_move = True
+
                 # Rysowanie Skarbu
                 # W momencie kliknięcia myszą i braku wcześniej narysowanego skarbu
                 if event.type == pygame.MOUSEBUTTONDOWN and not treasure_drawn:
@@ -278,13 +292,10 @@ class First_Stage:
                 # Przycisk Randomize
                 if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
 
-                    labyrinth_drawn = False
-                    treasure_drawn = False
-                    cross_drawn = False
-                    random_treasure_drawn = True
-                    random_cross_drawn = True
-                    random_labyrinth_drawn = True
-                    show_next_move = True
+                    random_mode = True
+                    self.rtreasure = place_treasure()
+                    self.rcross = place_cross(self.rtreasure)
+                    self.maze = generate_maze(self.rtreasure, self.rcross)
 
                 # Przejście do następnego Gracza / do 2 Etapu Gry
                 if show_next_move:
@@ -297,3 +308,8 @@ class First_Stage:
                     exit()  # Kończy działanie programu
 
             pygame.display.update()  # Aktualizuje wyświetlaną grafikę gry
+
+
+
+
+

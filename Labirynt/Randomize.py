@@ -48,45 +48,29 @@ def place_cross(treasure):
             [(i, 9) for i in range(1, 9)])
     return cross
 
-def generate_maze():
-    def is_valid(x, y, maze, treasure, cross):
-        return 0 <= x < 10 and 0 <= y < 10 and (x, y) not in maze and (x, y) != treasure and (x, y) != cross
 
-    def get_valid_neighbors(x, y, maze, treasure, cross):
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        neighbors = []
+def generate_maze(treasure, cross):
+    path = []
 
-        for dx, dy in directions:
-            nx, ny = x + dx, y + dy
-            if is_valid(nx, ny, maze, treasure, cross):
-                neighbors.append((nx, ny))
+    x1, y1 = treasure
+    x2, y2 = cross
 
-        return neighbors
+    # Dodajemy punkty startowe
+    path.append((x1, y1))
 
-    treasure = place_treasure()
-    cross = place_cross(treasure)
+    # Tworzymy ścieżkę poziomo
+    while x1 != x2:
+        x1 += 1 if x1 < x2 else -1
+        path.append((x1, y1))
 
-    maze = [treasure]
-    visited = set(maze)
+    # Tworzymy ścieżkę pionowo
+    while y1 != y2:
+        y1 += 1 if y1 < y2 else -1
+        path.append((x1, y1))
 
-    while True:
-        neighbors = get_valid_neighbors(*maze[-1], visited, treasure, cross)
+    return path[1:-1]  # Zwracamy drogę bez punktu startowego i końcowego
 
-        if not neighbors:
-            break
 
-        neighbor = random.choice(neighbors)
-        maze.append(neighbor)
-        visited.add(neighbor)
-
-        if neighbor == cross:
-            break
-
-    while len(maze) < 35:
-        x, y = random.randint(0, 9), random.randint(0, 9)
-        if (x, y) != treasure and (x, y) != cross and (x, y) not in visited:
-            maze.append((x, y))
-            visited.add((x, y))
-
-    return maze
+droga = generate_maze(place_treasure(), place_cross(place_treasure()))
+print(droga)
 
