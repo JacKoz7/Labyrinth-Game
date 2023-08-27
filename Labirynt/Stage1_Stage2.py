@@ -1,7 +1,7 @@
 import pygame  # Importowanie modułu pygame
 from Board import GameState  # Import Klasy GameState
 from Button import Button  # Import Klasy button
-from Randomize import RandomizeButton, place_treasure, place_cross, generate_maze
+from Randomize import RandomizeButton, place_treasure, place_cross, generate_maze, place_random_point
 
 
 # Klasa reprezentująca Pierwszą fazę gry
@@ -13,7 +13,10 @@ class First_Stage:
         self.cross = (0, 0)  # Pozycja krzyża
         self.rtreasure = place_treasure()
         self.rcross = place_cross(self.rtreasure)
+        self.rpoint = place_random_point(self.rtreasure, self.rcross)
         self.maze = generate_maze(self.rtreasure, self.rcross)
+        #self.full_maze = generate_maze_points(self.rtreasure, self.rcross, self.rpoint, self.maze)
+
 
 
     # Metoda zwracająca czcionkę o określonym rozmiarze
@@ -153,6 +156,14 @@ class First_Stage:
                         row, col = square
                         screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
 
+                    return_button.ChangeColorImage(player_mouse_pos)
+
+                    undo_button.Update(screen)
+                    return_button.Update(screen)
+                    # for square1 in self.maze1:
+                    #     row, col = square1
+                    #     screen.blit(image_labyrinth, (102 + col * 60, 52 + row * 60))
+
 
             if cross_drawn:
                 row, col = selected_cross
@@ -198,6 +209,10 @@ class First_Stage:
                     random_cross_drawn = True
                     random_labyrinth_drawn = True
                     show_next_move = True
+                    show_step1 = False
+                    show_step2 = False
+                    show_step3 = False
+                    selected_treasure = None
 
                 # Rysowanie Skarbu
                 # W momencie kliknięcia myszą i braku wcześniej narysowanego skarbu
@@ -289,13 +304,31 @@ class First_Stage:
                         show_step3 = False
                         show_step2 = True
 
+                # przycisk undo po wciśnięciu przycisku random
+                if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
+                    return_button.CheckForInput(player_mouse_pos) and random_mode:
+
+                    random_mode = False
+                    from Main import Labirynt
+                    game = Labirynt(auto_start=False)
+                    game.game_process()  # Rozpoczyna nową grę
+
+
                 # Przycisk Randomize
                 if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
 
                     random_mode = True
                     self.rtreasure = place_treasure()
                     self.rcross = place_cross(self.rtreasure)
+                    self.rpoint = place_random_point(self.rtreasure, self.rcross)
                     self.maze = generate_maze(self.rtreasure, self.rcross)
+                    #self.full_maze = generate_maze_points(self.rtreasure, self.rcross, self.rpoint, self.maze)
+
+                    print(self.rtreasure)
+                    print(self.rcross)
+                    print(self.rpoint)
+                    print(self.maze)
+                    #print(self.full_maze)
 
                 # Przejście do następnego Gracza / do 2 Etapu Gry
                 if show_next_move:

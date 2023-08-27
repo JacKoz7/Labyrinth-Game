@@ -48,6 +48,13 @@ def place_cross(treasure):
             [(i, 9) for i in range(1, 9)])
     return cross
 
+def place_random_point(treasure, cross):
+    rpoint = (random.randint(0, 9), random.randint(0, 9))
+    while rpoint == treasure or rpoint == cross:
+        rpoint = (random.randint(0, 9), random.randint(0, 9))
+    return rpoint
+
+
 
 def generate_maze(treasure, cross):
     path = []
@@ -55,22 +62,50 @@ def generate_maze(treasure, cross):
     x1, y1 = treasure
     x2, y2 = cross
 
-    # Dodajemy punkty startowe
+    # # Dodajemy punkty startowe
     path.append((x1, y1))
 
-    # Tworzymy ścieżkę poziomo
-    while x1 != x2:
-        x1 += 1 if x1 < x2 else -1
-        path.append((x1, y1))
+    # Generujemy losową ścieżkę
+    while x1 != x2 or y1 != y2:
+        direction = random.choice(['horizontal', 'vertical'])
 
-    # Tworzymy ścieżkę pionowo
-    while y1 != y2:
-        y1 += 1 if y1 < y2 else -1
-        path.append((x1, y1))
+        if direction == 'horizontal':
+            if x1 < x2:
+                x1 += 1
+            elif x1 > x2:
+                x1 -= 1
+        else:
+            if y1 < y2:
+                y1 += 1
+            elif y1 > y2:
+                y1 -= 1
+
+        new_point = (x1, y1)
+
+        if new_point != path[-1]:  # Sprawdź, czy nowy punkt jest różny od ostatniego punktu na ścieżce
+            path.append(new_point)
 
     return path[1:-1]  # Zwracamy drogę bez punktu startowego i końcowego
 
 
-droga = generate_maze(place_treasure(), place_cross(place_treasure()))
-print(droga)
+# def generate_maze_points(treasure, cross, random_point, path1):
+#     points = []
+#     points.extend(path1)
+#
+#     # Generujemy ścieżki od treasure lub cross do random_point
+#     remaining_points = 35 - len(points)
+#     while remaining_points > 0:
+#         path = generate_maze(treasure if random.random() < 0.5 else cross, random_point)
+#         points.extend(path)
+#         remaining_points -= len(path)
+#
+#     return points[:35]  # Ograniczamy liczbę punktów do 35
+
+
+
+
+
+
+
+
 
