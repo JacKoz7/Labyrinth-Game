@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9af2fec5-0b25-46b2-b724-c501ec56c530" name="Changes" comment="algorytm losowania prawie ukończony">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Labirynt/Randomize.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Randomize.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" afterDir="false" />
     </list>

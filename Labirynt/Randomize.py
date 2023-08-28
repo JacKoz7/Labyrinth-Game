@@ -40,12 +40,19 @@ def place_treasure():
     return treasure
 
 def place_cross(treasure):
-    cross = random.choice([(0, i) for i in range(10)] + [(9, i) for i in range(10)] + [(i, 0) for i in range(1, 9)] +
-                          [(i, 9) for i in range(1, 9)])
-    while cross == treasure:
-        cross = random.choice(
-            [(0, i) for i in range(10)] + [(9, i) for i in range(10)] + [(i, 0) for i in range(1, 9)] +
-            [(i, 9) for i in range(1, 9)])
+    adjacent_positions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+    valid_cross_positions = [
+        (0, i) for i in range(10)
+    ] + [(9, i) for i in range(10)] + [(i, 0) for i in range(1, 9)] + [(i, 9) for i in range(1, 9)]
+
+    cross = random.choice(valid_cross_positions)
+
+    while cross == treasure or any(
+        (cross[0] + adj[0], cross[1] + adj[1]) == treasure for adj in adjacent_positions
+    ):
+        cross = random.choice(valid_cross_positions)
+
     return cross
 
 def place_random_point(treasure, cross):

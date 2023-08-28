@@ -214,6 +214,7 @@ class First_Stage:
                     show_step3 = False
                     selected_treasure = None
 
+
                 # Rysowanie Skarbu
                 # W momencie kliknięcia myszą i braku wcześniej narysowanego skarbu
                 if event.type == pygame.MOUSEBUTTONDOWN and not treasure_drawn:
@@ -306,13 +307,18 @@ class First_Stage:
 
                 # przycisk undo po wciśnięciu przycisku random
                 if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
-                    return_button.CheckForInput(player_mouse_pos) and random_mode:
+                        return_button.CheckForInput(player_mouse_pos) and random_mode:
 
+                    self.rtreasure = None
+                    self.rcross = None
+                    self.rpoint = None
+                    self.maze = None
+                    random_treasure_drawn = False
+                    random_cross_drawn = False
+                    random_labyrinth_drawn = False
+                    show_next_move = False
+                    show_step1 = True
                     random_mode = False
-                    from Main import Labirynt
-                    game = Labirynt(auto_start=False)
-                    game.game_process()  # Rozpoczyna nową grę
-
 
                 # Przycisk Randomize
                 if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
@@ -341,8 +347,5 @@ class First_Stage:
                     exit()  # Kończy działanie programu
 
             pygame.display.update()  # Aktualizuje wyświetlaną grafikę gry
-
-
-
 
 
