@@ -196,7 +196,7 @@ class Second_Stage:
                                     point = True  # Pomocnicza zmienna
 
                                 # Jeżeli wybrane pole to skarb
-                                if selected_square == self.treasure:
+                                if selected_square == self.treasure :
 
                                     # Wyświetlanie skarbu
                                     loc1, loc2 = self.treasure

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9af2fec5-0b25-46b2-b724-c501ec56c530" name="Changes" comment="algorytm losowania prawie ukończony">
-      <change beforePath="$PROJECT_DIR$/Labirynt/Randomize.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Randomize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Stage1_Stage2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Labirynt/Stage3_Stage4.py" beforeDir="false" afterPath="$PROJECT_DIR$/Labirynt/Stage3_Stage4.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693075619559</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="algorytm losowania prawie ukończony">
+      <created>1693247008311</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1693247008311</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

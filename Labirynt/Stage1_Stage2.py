@@ -11,10 +11,10 @@ class First_Stage:
         self.treasure = (0, 0)  # Pozycja skarbu
         self.labyrinth = []  # Lista przechowująca elementy labiryntu
         self.cross = (0, 0)  # Pozycja krzyża
-        self.rtreasure = place_treasure()
-        self.rcross = place_cross(self.rtreasure)
-        self.rpoint = place_random_point(self.rtreasure, self.rcross)
-        self.maze = generate_maze(self.rtreasure, self.rcross)
+        self.random_treasure = place_treasure()
+        self.random_cross = place_cross(self.random_treasure)
+        self.random_point = place_random_point(self.random_treasure, self.random_cross)
+        self.maze = generate_maze(self.random_treasure, self.random_cross)
         #self.full_maze = generate_maze_points(self.rtreasure, self.rcross, self.rpoint, self.maze)
 
 
@@ -170,11 +170,11 @@ class First_Stage:
                 screen.blit(image_cross, (102 + col * 60, 52 + row * 60))
 
             if random_cross_drawn:
-                row, col = self.rcross
+                row, col = self.random_cross
                 screen.blit(image_cross, (102 + col * 60, 52 + row * 60))
 
             if random_treasure_drawn:
-                row, col = self.rtreasure
+                row, col = self.random_treasure
                 screen.blit(image_treasure, (102 + col * 60, 52 + row * 60))
 
             # Obsługa zdarzeń
@@ -309,9 +309,9 @@ class First_Stage:
                 if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
                         return_button.CheckForInput(player_mouse_pos) and random_mode:
 
-                    self.rtreasure = None
-                    self.rcross = None
-                    self.rpoint = None
+                    self.random_treasure = None
+                    self.random_cross = None
+                    self.random_point = None
                     self.maze = None
                     random_treasure_drawn = False
                     random_cross_drawn = False
@@ -324,21 +324,26 @@ class First_Stage:
                 if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
 
                     random_mode = True
-                    self.rtreasure = place_treasure()
-                    self.rcross = place_cross(self.rtreasure)
-                    self.rpoint = place_random_point(self.rtreasure, self.rcross)
-                    self.maze = generate_maze(self.rtreasure, self.rcross)
+                    self.random_treasure = place_treasure()
+                    self.random_cross = place_cross(self.random_treasure)
+                    self.random_point = place_random_point(self.random_treasure, self.random_cross)
+                    self.maze = generate_maze(self.random_treasure, self.random_cross)
                     #self.full_maze = generate_maze_points(self.rtreasure, self.rcross, self.rpoint, self.maze)
 
-                    print(self.rtreasure)
-                    print(self.rcross)
-                    print(self.rpoint)
+                    print(self.random_treasure)
+                    print(self.random_cross)
+                    print(self.random_point)
                     print(self.maze)
                     #print(self.full_maze)
 
                 # Przejście do następnego Gracza / do 2 Etapu Gry
                 if show_next_move:
-                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos):
+                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos) and random_mode:
+                        self.labyrinth = self.maze
+                        self.cross = self.random_cross
+                        self.treasure = self.random_treasure
+                        return
+                    elif event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos) and not random_mode:
                         return
 
                 # Zamykanie gry
