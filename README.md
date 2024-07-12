@@ -1,31 +1,29 @@
+## Allow me to present a brief overview of our project - the game "Labyrinth":
 
-Przedstawiamy krótki opis naszego projektu - gry "Labirynt":
+### To commence, one must initiate the main.py file. Upon launching the game, three options are available:
 
-1)  Aby rozpocząć, należy uruchomić plik main.py.
-Po uruchomieniu gry, dostępne są trzy opcje:
-•	Graj
-•	Instrukcja 
-•	Wyjście 
+- Play
+- Instructions
+- Exit
+  
+### Instructions: 
 
-Instrukcja ---> zawiera nieco modyfikowaną instrukcję gry ze strony: https://zabawnik.org/wystarczy-kartka-i-dlugopis. 
-Modyfikacje:
-•	Ustaliliśmy liczbę kratek na 35.
-•	Zrezygnowaliśmy z napisów 'od A do J' oraz 'od 1 do 10' na górnym i bocznym marginesie planszy w celu poprawienia estetyki interfejsu.
+This section contains a slightly modified set of game instructions derived from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis. Modifications include:
+- We have set the grid size to 35.
+- We have omitted the labels 'A to J' and '1 to 10' from the top and side margins of the board to enhance the interface's aesthetics.
 
-2) Pierwszy etap gry wygląda następująco:
-•	Po naciśnięciu przycisku ‘Graj’ ---> Gracz 1 rysuje labirynt.
-•	Po zakończeniu rysowania ---> Przejście do rysowania labiryntu dla Gracza 2. 
+### Stage One of the Game unfolds as follows:
 
-3) Drugi etap gry:
-•	Gracz 1 rozpoczyna odgadywanie labiryntu stworzonego przez Gracza 2.
-•	Gdy Gracz 1 kliknie na ścianę lub odnajdzie 5 kratek ---> Gracz 2 przechodzi do zgadywania. 
+- Upon pressing the ‘Play’ button, Player 1 draws the labyrinth.
+- After completing the drawing, the game transitions to the labyrinth drawing phase for Player 2.
+  
+### Stage Two of the Game:
 
-**Proces odgadywania labiryntu jest dynamiczny dla obu graczy ---> automatycznie przełącza się pomiędzy nimi.
+- Player 1 begins by guessing the labyrinth created by Player 2.
+- When Player 1 clicks on a wall or discovers 5 grid squares, Player 2 takes their turn at guessing.
+  
+The labyrinth guessing process is dynamic for both players, automatically switching between them.
+Determining the Winner. The game concludes when either Player 1 or Player 2 finds the treasure.
+### Upon the game's conclusion, the winner is revealed.
 
-4) Wyłonienie zwycięzcy:
-•	Gra kończy się, gdy Gracz 1 lub Gracz 2 odnajdzie skarb.
-•	Po zakończeniu gry następuje ujawnienie zwycięzcy.
-
-Autorzy: Jacek Kozłowski oraz Mykhailo Kapustianyk.
-
-
+Authors: Jacek Kozłowski and Mykhailo Kapustianyk.
