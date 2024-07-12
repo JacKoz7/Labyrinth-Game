@@ -1,16 +1,17 @@
-Allow me to present a brief overview of our project - the game "Labyrinth":
+## Allow me to present a brief overview of our project - the game "Labyrinth":
 
-To commence, one must initiate the main.py file. Upon launching the game, three options are available:
+### To commence, one must initiate the main.py file. Upon launching the game, three options are available:
 
-Play
-Instructions
-Exit
-Instructions: This section contains a slightly modified set of game instructions derived from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis. Modifications include:
-
+- Play
+- Instructions
+- Exit
+  
+## Instructions: 
+This section contains a slightly modified set of game instructions derived from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis. Modifications include:
 We have set the grid size to 35.
 We have omitted the labels 'A to J' and '1 to 10' from the top and side margins of the board to enhance the interface's aesthetics.
-Stage One of the Game unfolds as follows:
 
+Stage One of the Game unfolds as follows:
 Upon pressing the ‘Play’ button, Player 1 draws the labyrinth.
 After completing the drawing, the game transitions to the labyrinth drawing phase for Player 2.
 Stage Two of the Game:
