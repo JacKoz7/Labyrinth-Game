@@ -1,9 +1,9 @@
 ## Student Project Description - "Labyrinth" Game
 ### Upon starting the game, three options are available:
 - Play
-- Instructions
+- Instructions ---> contain a slightly modified game guide from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis.
 - Exit
-  Instructions ---> contain a slightly modified game guide from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis.
+
 ### Modifications:
 
 - We set the number of squares to 35.
