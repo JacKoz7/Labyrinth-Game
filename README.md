@@ -4,7 +4,7 @@
 - Instructions
 - Exit
   Instructions ---> contain a slightly modified game guide from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis.
-###Modifications:
+### Modifications:
 
 - We set the number of squares to 35.
 - We removed the labels 'from A to J' and 'from 1 to 10' on the top and side margins of the board to improve the interface aesthetics.
