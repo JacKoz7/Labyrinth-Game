@@ -32,7 +32,7 @@ After the game ends, the winner is revealed.
 ```
 git clone https://github.com/JacKoz7/Labyrinth-Game.git
 cd Labyrinth-Game
-pip install pygame
+pip install -r requirements.txt
 python Main.py
 ```
 
