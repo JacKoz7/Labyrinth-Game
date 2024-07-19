@@ -9,6 +9,9 @@ from Stage3_Stage4 import Second_Stage, Game_status
 class Labirynt:
     def __init__(self, auto_start=True):
         pygame.init()
+        pygame.mixer.init()
+        pygame.mixer.music.load('soundtrack/MenuMusic.mp3')
+        self.music_playing = False
         self.clock = pygame.time.Clock()  # Create a timekeeping object to manage the frame rate.
         self.h = 700
         self.screen = pygame.display.set_mode((2 * self.h, self.h))  # Establish the screen's dimensions.
@@ -25,9 +28,9 @@ class Labirynt:
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
 
+
     # A method depicting the unfolding of the game.
     def game_process(self):
-
         # Engender objects for the initial stage of the game for both participants.
         Player1_beginning = First_Stage()
         Player2_beginning = First_Stage()
@@ -94,8 +97,11 @@ class Labirynt:
 
             pygame.display.update()  # Renew the game's visual display.
 
-    # A method that enacts the game menu.
+    # A method that enacts the game menu. After clicking menu button
     def main_menu(self):
+        if not self.music_playing:
+            pygame.mixer.music.play(-1)  # -1 means loop indefinitely
+            self.music_playing = True
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
             bg = pygame.image.load("Images/game_background.png")
@@ -127,6 +133,8 @@ class Labirynt:
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.CheckForInput(menu_mouse_pos):
+                        pygame.mixer.music.stop()
+                        self.music_playing = False
                         self.game_process()
 
                     if instruction_button.CheckForInput(menu_mouse_pos):
