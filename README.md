@@ -1,28 +1,24 @@
-Przedstawiamy krótki opis naszego projektu - gry "Labirynt":
+## Student Project Description - "Labyrinth" Game
+### Upon starting the game, three options are available:
+- Play
+- Instructions
+- Exit
+  Instructions ---> contain a slightly modified game guide from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis.
+###Modifications:
 
-1)  Aby rozpocząć, należy uruchomić plik main.py.
-Po uruchomieniu gry, dostępne są trzy opcje:
-•	Graj
-•	Instrukcja 
-•	Wyjście 
+- We set the number of squares to 35.
+- We removed the labels 'from A to J' and 'from 1 to 10' on the top and side margins of the board to improve the interface aesthetics.
+### The first stage of the game is as follows:
 
-Instrukcja ---> zawiera nieco modyfikowaną instrukcję gry ze strony: https://zabawnik.org/wystarczy-kartka-i-dlugopis. 
-Modyfikacje:
-•	Ustaliliśmy liczbę kratek na 35.
-•	Zrezygnowaliśmy z napisów 'od A do J' oraz 'od 1 do 10' na górnym i bocznym marginesie planszy w celu poprawienia estetyki interfejsu.
+- After pressing the 'Play' button ---> Player 1 draws the maze.
+- Upon completing the drawing ---> Move on to drawing the maze for Player 2.
+### The second stage of the game:
 
-2) Pierwszy etap gry wygląda następująco:
-•	Po naciśnięciu przycisku ‘Graj’ ---> Gracz 1 rysuje labirynt.
-•	Po zakończeniu rysowania ---> Przejście do rysowania labiryntu dla Gracza 2. 
+- Player 1 starts guessing the maze created by Player 2.
+- When Player 1 clicks on a wall or finds 5 squares ---> Player 2 starts guessing.
+The maze guessing process is dynamic for both players ---> it switches between them automatically.
+Determining the winner:
 
-3) Drugi etap gry:
-•	Gracz 1 rozpoczyna odgadywanie labiryntu stworzonego przez Gracza 2.
-•	Gdy Gracz 1 kliknie na ścianę lub odnajdzie 5 kratek ---> Gracz 2 przechodzi do zgadywania. 
-
-**Proces odgadywania labiryntu jest dynamiczny dla obu graczy ---> automatycznie przełącza się pomiędzy nimi.
-
-4) Wyłonienie zwycięzcy:
-•	Gra kończy się, gdy Gracz 1 lub Gracz 2 odnajdzie skarb.
-•	Po zakończeniu gry następuje ujawnienie zwycięzcy.
-
-Autorzy: Jacek Kozłowski oraz Mykhailo Kapustianyk.
+### The game ends when Player 1 or Player 2 finds the treasure.
+After the game ends, the winner is revealed.
+Authors: Jacek Kozłowski and Mykhailo Kapustianyk.
