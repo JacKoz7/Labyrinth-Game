@@ -27,4 +27,13 @@ Determining the winner:
 After the game ends, the winner is revealed.
 ![image](https://github.com/user-attachments/assets/ba0442c1-77e6-4ba5-97e3-63536c83799b)
 
+### Run the project
+
+```
+git clone https://github.com/JacKoz7/Labyrinth-Game.git
+cd Labyrinth-Game
+pip install pygame
+python Main.py
+```
+
 Authors: Jacek Kozłowski and Mykhailo Kapustianyk.
