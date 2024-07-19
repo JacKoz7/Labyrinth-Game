@@ -3,6 +3,8 @@
 - Play
 - Instructions ---> contain a slightly modified game guide from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis.
 - Exit
+![image](https://github.com/user-attachments/assets/6b46e89c-5591-472b-8fcd-b20d9bf587ef)
+
 
 ### Modifications:
 
@@ -12,6 +14,8 @@
 
 - After pressing the 'Play' button ---> Player 1 draws the maze.
 - Upon completing the drawing ---> Move on to drawing the maze for Player 2.
+  ![image](https://github.com/user-attachments/assets/152625f4-66ce-46b5-a9c7-b448b1f57701)
+
 ### The second stage of the game:
 
 - Player 1 starts guessing the maze created by Player 2.
@@ -21,4 +25,6 @@ Determining the winner:
 
 ### The game ends when Player 1 or Player 2 finds the treasure.
 After the game ends, the winner is revealed.
+![image](https://github.com/user-attachments/assets/ba0442c1-77e6-4ba5-97e3-63536c83799b)
+
 Authors: Jacek Kozłowski and Mykhailo Kapustianyk.
