@@ -91,7 +91,7 @@ class Labirynt:
                     pygame.quit()  # Terminate Pygame.
                     exit()  # Conclude the program.
 
-                if event.type == pygame.MOUSEBUTTONDOWN:  # If the mouse button is depressed.
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # If the left mouse button is depressed.
                     if menu_button.CheckForInput(options_mouse_pos):
                         self.main_menu()  # Return to the main menu.
 
@@ -131,7 +131,7 @@ class Labirynt:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # If the left mouse button is depressed.:
                     if play_button.CheckForInput(menu_mouse_pos):
                         pygame.mixer.music.stop()
                         self.music_playing = False

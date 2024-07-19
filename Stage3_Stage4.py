@@ -136,13 +136,13 @@ class Second_Stage:
 
                 for event in pygame.event.get():
                     # If the winning button is clicked
-                    if event.type == pygame.MOUSEBUTTONDOWN and winner_button_menu.CheckForInput(play_mouse_pos):
+                    if event.type == pygame.MOUSEBUTTONDOWN and winner_button_menu.CheckForInput(play_mouse_pos) and event.button == 1:  # If the left mouse button is depressed.:
                         from Main import Labirynt
                         game = Labirynt()
                         game.main_menu()  # Transition to the main menu of the game
 
                     # If the 'Play Again' button is clicked
-                    if event.type == pygame.MOUSEBUTTONDOWN and play_again_button.CheckForInput(play_mouse_pos):
+                    if event.type == pygame.MOUSEBUTTONDOWN and play_again_button.CheckForInput(play_mouse_pos) and event.button == 1:  # If the left mouse button is depressed.:
                         from Main import Labirynt
                         game = Labirynt(auto_start=False)
                         game.game_process()  # Start a new game
@@ -157,7 +157,7 @@ class Second_Stage:
             # Event handling
             for event in pygame.event.get():
                 # When the mouse is clicked and the cross is already drawn
-                if event.type == pygame.MOUSEBUTTONDOWN and cross_drawn:
+                if event.type == pygame.MOUSEBUTTONDOWN and cross_drawn and event.button == 1:  # If the left mouse button is depressed.:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
 
                     # Checking if the mouse click is within the board boundaries
@@ -218,7 +218,7 @@ class Second_Stage:
                                     board.draw_small_board(screen, counter, wall)
 
                 # Return to the main menu
-                if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos):
+                if event.type == pygame.MOUSEBUTTONDOWN and button_back.CheckForInput(play_mouse_pos) and event.button == 1:  # If the left mouse button is depressed.:
                     from Main import Labirynt
                     game = Labirynt()
                     game.main_menu()

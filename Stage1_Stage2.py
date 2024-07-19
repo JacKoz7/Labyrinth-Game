@@ -213,7 +213,7 @@ class First_Stage:
 
                 # Drawing the Treasure
                 # Upon clicking the mouse and if no treasure has been previously drawn
-                if event.type == pygame.MOUSEBUTTONDOWN and not treasure_drawn:
+                if event.type == pygame.MOUSEBUTTONDOWN and not treasure_drawn and event.button == 1:  # If the left mouse button is depressed.:
 
                     mouse_x, mouse_y = pygame.mouse.get_pos()  # Get the mouse position
 
@@ -231,7 +231,7 @@ class First_Stage:
                     # print(selected_treasure)
 
                 # Drawing the labyrinth
-                if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 37:
+                if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(self.labyrinth) < 37 and event.button == 1:  # If the left mouse button is depressed.:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
 
                     selected_labyrinth = self.selected_square(location, mouse_x, mouse_y)
@@ -260,7 +260,7 @@ class First_Stage:
 
                 # Drawing the cross
                 if event.type == pygame.MOUSEBUTTONDOWN and treasure_drawn and len(
-                        self.labyrinth) == 37 and not cross_drawn:
+                        self.labyrinth) == 37 and not cross_drawn and event.button == 1:  # If the left mouse button is depressed.:
 
                     # Check if the selected square is on the edge
                     if location[0] == 0 or location[0] == 9 or location[1] == 0 or location[1] == 9:
@@ -286,14 +286,14 @@ class First_Stage:
                         must_restart = True
 
                 # Return to the main menu
-                if event.type == pygame.MOUSEBUTTONDOWN and menu_button.CheckForInput(player_mouse_pos):
+                if event.type == pygame.MOUSEBUTTONDOWN and menu_button.CheckForInput(player_mouse_pos) and event.button == 1:  # If the left mouse button is depressed.:
                     from Main import Labirynt
                     game = Labirynt()
                     game.main_menu()
 
                 # Undo button
                 if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
-                        return_button.CheckForInput(player_mouse_pos) and 1 < len(self.labyrinth) <= 36:
+                        return_button.CheckForInput(player_mouse_pos) and 1 < len(self.labyrinth) <= 36 and event.button == 1:  # If the left mouse button is depressed.:
 
                     self.labyrinth.pop(-1)
 
@@ -303,7 +303,7 @@ class First_Stage:
 
                 # Undo button after pressing the random button
                 if event.type == pygame.MOUSEBUTTONDOWN and undo_button.CheckForInput(player_mouse_pos) and \
-                        return_button.CheckForInput(player_mouse_pos) and random_mode:
+                        return_button.CheckForInput(player_mouse_pos) and random_mode and event.button == 1:  # If the left mouse button is depressed.:
 
                     self.random_treasure = None
                     self.random_cross = None
@@ -317,7 +317,7 @@ class First_Stage:
                     random_mode = False
 
                 # # Randomize button todo
-                # if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos):
+                # if event.type == pygame.MOUSEBUTTONDOWN and randomize_button.CheckForInput(player_mouse_pos) and event.button == 1:  # If the left mouse button is depressed.:
                 #
                 #     random_mode = True
                 #     self.random_treasure = place_treasure()
@@ -334,12 +334,12 @@ class First_Stage:
 
                 # Move to the next Player / to the 2nd Stage of the Game
                 if show_next_move:
-                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos) and random_mode:
+                    if event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos) and random_mode and event.button == 1:  # If the left mouse button is depressed.:
                         self.labyrinth = self.maze
                         self.cross = self.random_cross
                         self.treasure = self.random_treasure
                         return
-                    elif event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos) and not random_mode:
+                    elif event.type == pygame.MOUSEBUTTONDOWN and button_player2.CheckForInput(player_mouse_pos) and not random_mode and event.button == 1:  # If the left mouse button is depressed.:
                         return
 
                 # Closing the game
