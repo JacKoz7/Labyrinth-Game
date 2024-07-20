@@ -14,7 +14,7 @@ class Labirynt:
         self.clock = pygame.time.Clock()
         self.h = 700
         self.screen = pygame.display.set_mode((2 * self.h, self.h))
-        pygame.display.set_caption('Labirynt')
+        pygame.display.set_caption('The Labirynth')
         self.txt2 = 'Player 2'
         self.txt = 'Player 1'
         self.icon = pygame.image.load("Images/game_icon.png")

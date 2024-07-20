@@ -1,8 +1,8 @@
 # Function to display game instructions on the screen
 def inst(screen, get_font, h):
     text = 'In this game, one must uncover the opponent’s hidden treasure. Each player possesses a board in the form'
-    text1 = 'of two squares, each 10 x 10 squares in size. In any square of their board, players place a treasure'
-    text2 = 'marked with a circle and designate a path to it, drawing a labyrinth of any length and a width of'
+    text1 = 'of two squares, each 10 x 10 squares in size. In the first phase of the game, player places a treasure'
+    text2 = 'marked with a circle and designate a path to it, drawing a labyrinth of certain length and a width of'
     text3 = 'one square. The labyrinth may be quite winding and must contain 35 segments, each one square long.'
     text4 = 'It should terminate at the edge of the square. In this terminal square, a cross is drawn, and its coordinates'
     text5 = 'are known to the opponent. From this point, they will set off to search for the treasure. The player starting'

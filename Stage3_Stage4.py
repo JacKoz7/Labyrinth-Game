@@ -200,7 +200,7 @@ class Second_Stage:
                                     screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     board.draw_small_board(screen, counter, wall)
-                                    
+
                                     pause = True
                                     winner = True  # Set the winner status to true
 
