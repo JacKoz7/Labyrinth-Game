@@ -200,9 +200,10 @@ class Second_Stage:
                                     screen.blit(image_treasure, (102 + loc2 * 60, 52 + loc1 * 60))
 
                                     board.draw_small_board(screen, counter, wall)
-
-                                    winner = True  # Set the winner status to true
+                                    
                                     pause = True
+                                    winner = True  # Set the winner status to true
+
 
                             else:  # If the selected square is adjacent to a correct one but not in the labyrinth
 

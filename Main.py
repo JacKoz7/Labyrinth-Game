@@ -10,50 +10,52 @@ class Labirynt:
     def __init__(self, auto_start=True):
         pygame.init()
         pygame.mixer.init()
-        pygame.mixer.music.load('soundtrack/MenuMusic.mp3')
         self.music_playing = False
-        self.clock = pygame.time.Clock()  # Create a timekeeping object to manage the frame rate.
+        self.clock = pygame.time.Clock()
         self.h = 700
-        self.screen = pygame.display.set_mode((2 * self.h, self.h))  # Establish the screen's dimensions.
-        pygame.display.set_caption('Labirynt')  # Bestow the window with its noble title.
+        self.screen = pygame.display.set_mode((2 * self.h, self.h))
+        pygame.display.set_caption('Labirynt')
         self.txt2 = 'Player 2'
         self.txt = 'Player 1'
         self.icon = pygame.image.load("Images/game_icon.png")
-        pygame.display.set_icon(self.icon)  # Affix an icon to the window, enhancing its splendour.
+        pygame.display.set_icon(self.icon)
 
         if auto_start:
-            self.main_menu()  # Summon the main_menu method upon the object's inception.
+            self.main_menu()
 
-    # A method to procure a font of a specified magnitude.
     def get_font(self, size):
         return pygame.font.Font('Ancient Medium.ttf', size)
 
+    def play_menu_music(self):
+        pygame.mixer.music.load('soundtrack/MenuMusic.mp3')
+        pygame.mixer.music.play(-1) #loop music
+        self.music_playing = True
 
-    # A method depicting the unfolding of the game.
+    def play_game_music(self):
+        pygame.mixer.music.load('soundtrack/GameMusic.mp3')
+        pygame.mixer.music.play(-1)
+        self.music_playing = True
+
     def game_process(self):
-        # Engender objects for the initial stage of the game for both participants.
+        self.play_game_music() # play battle music during gameplay
+
         Player1_beginning = First_Stage()
         Player2_beginning = First_Stage()
 
-        # Conjure objects encapsulating the game status for both participants.
         Player1_status = Game_status(walls=[], found_labyrinth=[], winner=False)
         Player2_status = Game_status(walls=[], found_labyrinth=[], winner=False)
 
-        # Invoke the first stage method for Player 1.
         Player1_beginning.play(self.screen, self.txt, 'Player 2 ')
 
-        # Fabricate an object for the second stage of the game for Player 1, employing the parameterized constructor.
         Player1_ending = Second_Stage(Player1_beginning.treasure,
                                       Player1_beginning.labyrinth,
                                       Player1_beginning.cross)
 
-        # Likewise, for Player 2.
         Player2_beginning.play(self.screen, self.txt2, 'Continue ')
         Player2_ending = Second_Stage(Player2_beginning.treasure,
                                       Player2_beginning.labyrinth,
                                       Player2_beginning.cross)
 
-        # A loop that persists until a victor emerges (the 'winner' attribute is incessantly updated).
         while Player1_status.winner is False and Player2_status.winner is False:
             if Player1_status.winner is False:
                 Player2_ending.endgame(self.screen, self.txt, self.txt2, Player1_status.walls,
@@ -63,45 +65,42 @@ class Labirynt:
                 Player1_ending.endgame(self.screen, self.txt2, self.txt, Player2_status.walls,
                                        Player2_status.found_labyrinth, Player1_status.winner)
 
-    # A method that proclaims the game's instructions.
+        self.play_menu_music()
+        self.main_menu()
+
     def instructions(self):
         while True:
-            options_mouse_pos = pygame.mouse.get_pos()  # Ascertain the position of the mouse.
-            self.screen.fill('Black')  # Adorn the screen with a sable hue.
+            options_mouse_pos = pygame.mouse.get_pos()
+            self.screen.fill('Black')
 
-            # Compose and exhibit the title 'Game Instructions:'.
             options_text = self.get_font(55).render('Game Instructions:', True, 'Red')
             options_rect = options_text.get_rect(center=(self.h, 100))
             self.screen.blit(options_text, options_rect)
 
-            inst(self.screen, self.get_font(35),
-                 self.h)  # Invoke the inst function from the instructions file, which reveals the actual instructions.
+            inst(self.screen, self.get_font(35), self.h)
 
-            img_button = pygame.image.load('Images/empty_button.png')  # Load the image for the button.
+            img_button = pygame.image.load('Images/empty_button.png')
 
-            # Forge the 'Menu' button.
             menu_button = Button(image=img_button, pos=(180, 80), text_input='Menu', font=self.get_font(65),
                                  base_color='Black', new_color='White')
 
-            menu_button.ChangeColor(options_mouse_pos)  # Alter the button's hue if the mouse hovers over it.
-            menu_button.Update(self.screen)  # Refresh the displayed button upon the screen.
+            menu_button.ChangeColor(options_mouse_pos)
+            menu_button.Update(self.screen)
 
-            for event in pygame.event.get():  # Handle events with due diligence.
-                if event.type == pygame.QUIT:  # Should the game window be closed.
-                    pygame.quit()  # Terminate Pygame.
-                    exit()  # Conclude the program.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
 
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # If the left mouse button is depressed.
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if menu_button.CheckForInput(options_mouse_pos):
-                        self.main_menu()  # Return to the main menu.
+                        return
 
-            pygame.display.update()  # Renew the game's visual display.
+            pygame.display.update()
 
-    # A method that enacts the game menu. After clicking menu button
     def main_menu(self):
-        if not self.music_playing:
-            pygame.mixer.music.play(-1)  # -1 means loop indefinitely
-            self.music_playing = True
+        if not self.music_playing: # play menu music
+            self.play_menu_music()
         while True:
             menu_mouse_pos = pygame.mouse.get_pos()
             bg = pygame.image.load("Images/game_background.png")
@@ -122,16 +121,15 @@ class Labirynt:
 
             self.screen.blit(menu_text, menu_rect)
 
-            for buttons in [play_button, instruction_button, quit_button]:  # Traverse the array of buttons.
+            for buttons in [play_button, instruction_button, quit_button]:
                 buttons.ChangeColor(menu_mouse_pos)
                 buttons.Update(self.screen)
 
-            # Event management.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # If the left mouse button is depressed.:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if play_button.CheckForInput(menu_mouse_pos):
                         pygame.mixer.music.stop()
                         self.music_playing = False
@@ -146,7 +144,6 @@ class Labirynt:
 
             pygame.display.update()
 
-    # A method to commence the game.
     def run(self):
         self.main_menu()
 
