@@ -1,4 +1,4 @@
-## Student Project Description - "Labyrinth" Game
+## Student Project Description - "The Labyrinth" Game
 ### Upon starting the game, three options are available:
 - Play
 - Instructions ---> contain a slightly modified game guide from the website: https://zabawnik.org/wystarczy-kartka-i-dlugopis.
