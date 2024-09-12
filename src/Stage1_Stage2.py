@@ -19,7 +19,7 @@ class First_Stage:
 
     # A method to return a font object of a specified size
     def get_font(self, size):
-        return pygame.font.Font("Ancient Medium.ttf", size)
+        return pygame.font.Font("font/Ancient Medium.ttf", size)
 
     # A method to return the coordinates of the selected square
     def selected_square(self, location, mouse_x, mouse_y):

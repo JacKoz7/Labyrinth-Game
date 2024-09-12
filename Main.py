@@ -24,7 +24,7 @@ class Labirynt:
             self.main_menu()
 
     def get_font(self, size):
-        return pygame.font.Font("Ancient Medium.ttf", size)
+        return pygame.font.Font("font/Ancient Medium.ttf", size)
 
     def play_menu_music(self):
         pygame.mixer.music.load("soundtrack/MenuMusic.mp3")

@@ -28,7 +28,7 @@ class Second_Stage:
 
     # The 'get_font' method creates a font object of a specified size
     def get_font(self, size):
-        return pygame.font.Font("../Ancient Medium.ttf", size)
+        return pygame.font.Font("font/Ancient Medium.ttf", size)
 
     # The 'get_neighbors' method returns a list of neighbouring squares for a given position
     def get_neighbors(self, position):
