@@ -171,7 +171,7 @@ class First_Stage:
                             return_button.Update(screen)
 
             if random_labyrinth_drawn:
-                for square in self.maze:
+                for square in self.maze: # error fix later
                     if (
                         square != place_cross(place_treasure())
                         and square != place_treasure()
